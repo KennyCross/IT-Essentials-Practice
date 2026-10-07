@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IT Essentials 8 study bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#F1F6F4;--surface:#FFFFFF;--ink:#12292B;--muted:#56706D;--line:#D3E0DC;--brand:#0F4C4A;--accent:#0F766E;--gold:#D28E17;--goldsoft:#F6E3BC;--bad:#B4432F;--badbg:#FBE9E5;--goodbg:#DFF2EE;--onbrand:#FFFFFF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1D1E;--surface:#122B2C;--ink:#EAF2EF;--muted:#9DB6B1;--line:#244544;--brand:#0F4C4A;--accent:#5CC8B8;--gold:#F0A93B;--goldsoft:#3A3220;--bad:#F08A75;--badbg:#3A1F1A;--goodbg:#12393A;--onbrand:#FFFFFF}}
+:root[data-theme="dark"]{--bg:#0B1D1E;--surface:#122B2C;--ink:#EAF2EF;--muted:#9DB6B1;--line:#244544;--brand:#0F4C4A;--accent:#5CC8B8;--gold:#F0A93B;--goldsoft:#3A3220;--bad:#F08A75;--badbg:#3A1F1A;--goodbg:#12393A;--onbrand:#FFFFFF}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:1.0625rem;line-height:1.55;-webkit-text-size-adjust:100%}
+h1,h2,h3,.num{font-family:"Chakra Petch","Trebuchet MS",Verdana,sans-serif;font-weight:700;line-height:1.15;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,7vw,3.1rem)}h2{font-size:clamp(1.35rem,4.6vw,1.75rem)}h3{font-size:1.15rem}
+p{margin:0}
+.wrap{max-width:46rem;margin:0 auto;padding:1.25rem 1.1rem 4rem}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.muted{color:var(--muted)}.small{font-size:.9rem}
+.stack>*+*{margin-top:1rem}.gap-l>*+*{margin-top:1.75rem}
+/* edge-connector progress */
+.pins{display:flex;gap:3px;align-items:flex-end}
+.pins i{flex:1;height:14px;border-radius:2px 2px 0 0;background:var(--line);max-width:14px}
+.pins i.on{background:var(--gold)}
+.pins.wide{flex:1 1 12rem;max-width:20rem}
+.pins.big i{height:34px;max-width:none;border-radius:3px 3px 0 0}
+.board{background:var(--brand);color:var(--onbrand);border-radius:14px;padding:1.6rem 1.3rem 0;overflow:hidden}
+.board p{color:#CFE4DF;max-width:36rem;margin-top:.7rem}
+.board .pins{margin-top:1.5rem}.board .pins i{background:#2C6A66}.board .pins i.on{background:#F0A93B}
+.board .read{display:flex;justify-content:space-between;align-items:baseline;margin-top:1.3rem;font-size:.95rem;color:#CFE4DF}
+.board .read b{font-family:"Chakra Petch",sans-serif;font-size:1.5rem;color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7rem 1.15rem;border-radius:10px;border:2px solid var(--accent);background:var(--accent);color:#fff;font-weight:600;text-align:center}
+:root[data-theme="dark"] .btn,.dk .btn{color:#06201F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#06201F}}
+.btn.ghost{background:transparent;color:var(--accent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.ghost{color:var(--accent)}}
+:root[data-theme="dark"] .btn.ghost{color:var(--accent)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#12292B}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:.6rem}
+.link{background:none;border:0;padding:.4rem 0;color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+/* chapter slots */
+.slots{list-style:none;margin:0;padding:0}
+.slot{display:grid;grid-template-columns:3.1rem 1fr;gap:.2rem .9rem;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.95rem 1rem;margin-top:.6rem}
+button.slot:hover{border-color:var(--accent)}
+.slot .num{font-size:1.7rem;color:var(--accent);grid-row:span 2;align-self:center}
+.slot .t{font-weight:600;line-height:1.3}
+.slot .meta{display:flex;align-items:center;gap:.8rem;margin-top:.35rem}
+.slot .pins{flex:1;max-width:15rem}.slot .pins i{height:10px}
+.slot.off{background:transparent;border-style:dashed}.slot.off .num,.slot.off .t{color:var(--muted)}
+/* modes */
+.mode{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin-top:.6rem}
+.mode:hover{border-color:var(--accent)}.mode b{display:block;font-family:"Chakra Petch",sans-serif;font-size:1.15rem}
+.topic{display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;padding:.55rem 0;border-top:1px solid var(--line)}
+.bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}.bar span{display:block;height:100%;background:var(--gold)}
+/* question */
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}
+.clock{font-family:"Chakra Petch",sans-serif;font-weight:700;font-variant-numeric:tabular-nums}
+.clock.low{color:var(--bad)}
+.prog{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:1.5rem}.prog span{display:block;height:100%;background:var(--gold)}
+.opts{list-style:none;margin:1.25rem 0 0;padding:0}
+.opt{display:grid;grid-template-columns:2rem 1fr;gap:.7rem;width:100%;text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:.85rem 1rem;margin-top:.6rem;min-height:56px;align-items:start}
+.opt .k{font-family:"Chakra Petch",sans-serif;font-weight:700;color:var(--muted)}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.sel{border-color:var(--accent);background:var(--goodbg)}
+.opt.right{border-color:var(--accent);background:var(--goodbg)}.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.opt[disabled]{cursor:default;color:var(--ink)}
+.why{border-left:4px solid var(--gold);background:var(--surface);padding:.9rem 1rem;border-radius:0 10px 10px 0;margin-top:1.1rem}
+.why b{display:block;margin-bottom:.2rem}
+.verdict-ok{color:var(--accent)}.verdict-no{color:var(--bad)}
+/* flashcard */
+.card{display:flex;flex-direction:column;justify-content:center;width:100%;min-height:15rem;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.4rem;border-bottom:8px solid var(--gold)}
+.card .term{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:clamp(1.5rem,6vw,2.1rem);line-height:1.15}
+.card .def{margin-top:1rem;font-size:1.1rem}
+.card .hint{margin-top:1.2rem}
+/* results */
+.score{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:clamp(3rem,14vw,5rem);line-height:1}
+.rev{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin-top:.7rem}
+.rev .q{font-weight:600}.rev .a{margin-top:.45rem}
+.tag{display:inline-block;font-size:.85rem;font-weight:600;padding:.1rem .55rem;border-radius:999px;background:var(--goodbg);color:var(--accent)}
+.tag.no{background:var(--badbg);color:var(--bad)}
+label.pick{display:flex;gap:.7rem;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;margin-top:.5rem}
+label.pick input{width:1.25rem;height:1.25rem;margin-top:.2rem;accent-color:var(--accent)}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.6rem .8rem;min-height:48px}
+hr{border:0;border-top:1px solid var(--line);margin:2rem 0}
+@media (prefers-reduced-motion:no-preference){.prog span,.bar span{transition:width .25s ease}.pins i{transition:background .2s}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<noscript><p style="padding:1rem">This study course needs JavaScript switched on.</p></noscript>
+<script>
+// Question format: [topic, question, [correct, wrong, wrong, wrong], explanation]
+// Card format: [term, meaning]
+const CHAPTERS = [
+{ n: 1, title: "Introduction to Personal Computer Hardware", open: true,
+  blurb: "Safety, every major component inside the case, ports and cables, input and output devices, and taking a PC apart.",
+  q: [
+  ["Safety", "About how many volts of static must build up before a person can feel ESD?", ["3,000 volts", "30 volts", "300 volts", "30,000 volts"], "You only feel a discharge at about 3,000 volts, but components can be damaged by far less. That is why you can damage a part without ever feeling a shock."],
+  ["Safety", "Which item keeps you and the computer at the same electrical charge while you work inside it?", ["Antistatic wrist strap", "Safety goggles", "Compressed air", "Cable tester"], "The wrist strap goes on your wrist and clips to bare metal on the case, so no charge can jump between you and the components."],
+  ["Safety", "Why should you not use an AC adapter from a different type of laptop?", ["It may damage both the adapter and the laptop", "It only charges more slowly", "It erases the BIOS settings", "It works, but only on battery saver mode"], "AC adapters are manufactured for specific laptops. A plug that fits does not mean the voltage and power are right."],
+  ["Safety", "Where should a new component stay until you are ready to install it?", ["In its antistatic bag", "On top of the power supply", "On a carpeted floor", "On top of its antistatic bag"], "Components stay inside the antistatic bag until the moment of installation. The outside of the bag does not protect them."],
+  ["Case and power", "What does a computer power supply do?", ["Converts AC power into lower-voltage DC power", "Converts DC power into AC power", "Stores power for use during a power cut", "Increases the voltage coming from the wall"], "Wall power is AC. Internal components need low-voltage DC, typically 3.3 V, 5 V and 12 V."],
+  ["Case and power", "Which power supply form factor is the most common on the market today?", ["ATX12V", "AT", "EPS12V", "Berg"], "AT is the legacy original, ATX updated it, ATX12V is the most common today, and EPS12V was designed for servers. Berg is a connector, not a form factor."],
+  ["Case and power", "Which voltage is used to run the motors in disk drives and fans?", ["12 V", "3.3 V", "5 V", "24 V"], "3.3 V and 5 V feed digital circuits. 12 V drives things that move, such as drive motors and fans."],
+  ["Case and power", "A power connector is described as keyed. What does that mean?", ["It can only be inserted in one direction", "It needs a special key to remove it", "It carries more than one voltage", "It locks the case shut"], "Keyed connectors are shaped to fit one way only. If it will not go in, do not force it."],
+  ["Motherboard", "Which part of the chipset controls high speed access to the RAM and the video card?", ["Northbridge", "Southbridge", "BIOS chip", "CPU socket"], "Northbridge handles the fast traffic: RAM and video. Southbridge handles slower devices such as hard drives, USB ports and expansion slots."],
+  ["Motherboard", "Which motherboard form factor is the most popular?", ["ATX", "Micro-ATX", "Mini-ITX", "ITX"], "ATX measures 12 in x 9.6 in and is the most popular form factor."],
+  ["Motherboard", "Which of these motherboard form factors is the smallest?", ["Mini-ITX", "ATX", "Micro-ATX", "ITX"], "Mini-ITX is 6.7 in x 6.7 in, designed for small devices such as thin clients and set-top boxes."],
+  ["Motherboard", "What is a bus on a motherboard?", ["An electrical pathway that interconnects components", "A slot that holds memory", "A chip that stores the BIOS", "A cable from the power supply"], "The motherboard is a printed circuit board containing buses, electrical pathways that carry data between components."],
+  ["CPU and cooling", "On a Land Grid Array (LGA) processor, where are the pins?", ["In the socket", "On the underside of the processor", "On the heat sink", "On the chipset"], "LGA: pins in the socket, flat pads on the processor. PGA is the opposite, with pins on the processor."],
+  ["CPU and cooling", "Which of these is passive cooling?", ["A heat sink", "A case fan", "A CPU fan", "A liquid cooling pump"], "Passive cooling needs no power. A heat sink has no moving parts. Anything with a fan or pump is active."],
+  ["Memory", "Which type of memory is volatile, losing its contents when power is removed?", ["RAM", "ROM", "EEPROM", "SSD"], "RAM is temporary working storage and is volatile. ROM and drives keep their contents without power."],
+  ["Memory", "Which ROM chip can be rewritten electrically without removing it from the device?", ["EEPROM", "PROM", "EPROM", "ROM"], "EEPROM is electrically erasable. EPROM needs ultraviolet light, PROM is written once, and plain ROM is fixed at manufacture."],
+  ["Memory", "Which memory module would you order for a laptop?", ["SODIMM", "DIMM", "SIMM", "DIP"], "SODIMM is the small outline DIMM used in laptops. Desktops use DIMM."],
+  ["Memory", "Which type of RAM is typically used as cache memory?", ["SRAM", "DRAM", "SDRAM", "GDDR"], "Static RAM is the fastest and is used as cache for the data and instructions the CPU used most recently."],
+  ["Memory", "Which memory can detect multiple-bit errors and correct single-bit errors?", ["ECC", "Parity", "Nonparity", "SODIMM"], "Nonparity does not check, parity detects, and ECC detects and corrects."],
+  ["Adapter cards", "Which expansion slot is the current standard and is used for modern graphics cards?", ["PCIe", "PCI", "AGP", "PCI-X"], "PCI Express replaced PCI and AGP. PCI-X is an older extended PCI used mainly in servers."],
+  ["Adapter cards", "A customer's built-in wired network port has failed. Which adapter card replaces it?", ["NIC", "Capture card", "eSATA card", "TV tuner card"], "A network interface card adds a wired network connection. Adapter cards can replace malfunctioning ports."],
+  ["Storage", "What is the maximum transfer rate of SATA 3?", ["6.0 Gb/s", "1.5 Gb/s", "3.0 Gb/s", "16.6 Mb/s"], "SATA 1 is 1.5 Gb/s, SATA 2 is 3.0 Gb/s and SATA 3 is 6.0 Gb/s. The cables and connectors are the same."],
+  ["Storage", "Which storage device has no moving parts?", ["Solid state drive", "Hard disk drive", "Tape drive", "Optical drive"], "SSDs store data as electrical charges in flash memory, so they are faster, silent and produce less heat."],
+  ["Storage", "NVMe lets an SSD attach to which bus?", ["PCIe", "PCI", "IDE", "AGP"], "NVMe provides a standard interface between SSDs, the PCIe bus and operating systems, without special drivers."],
+  ["Storage", "What is a solid state hybrid drive (SSHD)?", ["A magnetic HDD with onboard flash memory acting as a cache", "Two SSDs joined together", "An SSD that connects by USB", "A tape drive with an SSD inside"], "An SSHD is faster than an HDD but less expensive than an SSD."],
+  ["Storage", "How much data does a single-layer Blu-ray disc hold?", ["25 GB", "700 MB", "4.7 GB", "8.5 GB"], "CD: 700 MB. DVD: 4.7 GB single layer, 8.5 GB dual layer. Blu-ray: 25 GB single layer, 50 GB dual layer."],
+  ["Ports and cables", "Which of these video connections is analog?", ["VGA", "HDMI", "DisplayPort", "Thunderbolt 3"], "VGA is the older analog connection. HDMI, DisplayPort and Thunderbolt are digital."],
+  ["Ports and cables", "What does a converter do that an adapter does not?", ["Translates the signal from one technology to the other", "Connects two cables of the same type", "Supplies extra power", "Increases the transfer speed"], "An adapter only connects one technology physically to another. A converter also translates the signal, for example HDMI to VGA."],
+  ["Ports and cables", "How many pins does a network (RJ-45) port have?", ["8", "4", "6", "15"], "The network port, also called RJ-45, has 8 pins."],
+  ["Input and output", "What is a KVM switch used for?", ["Controlling more than one computer with one keyboard, monitor and mouse", "Switching between wired and wireless networks", "Sharing one printer between rooms", "Connecting two monitors to one computer"], "KVM stands for keyboard, video, mouse. It is common in server rooms."],
+  ["Input and output", "Which device does the chapter list as both an input and an output device?", ["Virtual reality headset", "Projector", "Barcode scanner", "Fingerprint scanner"], "A VR headset shows the image to the user and also takes input from the user's movement."],
+  ["Input and output", "What does the number of lumens tell you about a projector?", ["How bright the projected image is", "How sharp the image is", "How large the image can be", "How long the lamp lasts"], "More lumens means a brighter image, which matters in well-lit rooms."],
+  ["Input and output", "Which technology superimposes images and audio over the real world in real time?", ["Augmented reality", "Virtual reality", "Digital Light Processing", "Near Field Communication"], "VR replaces what you see. AR adds to what you see, and usually does not block out ambient light."],
+  ["Input and output", "What do all printers need in order to communicate with the operating system?", ["A driver", "A KVM switch", "An adapter card", "A parallel cable"], "A driver is the software that lets the operating system talk to that specific printer."],
+  ["Disassembly", "What is the first step when disassembling a computer?", ["Power off and disconnect the power supply", "Remove the case screws", "Remove the RAM", "Disconnect the SATA cables"], "Nothing is touched while there is power. Make it safe first."],
+  ["Disassembly", "Which tool removes dust from fans and heat sinks without touching the components?", ["Compressed air", "Crimpers", "Cable tester", "Extraction tool"], "Compressed air blows dust out. Crimpers attach connectors to cables and a cable tester checks cable wiring."],
+  ],
+  cards: [
+  ["ESD", "Electrostatic discharge. A built-up charge jumping to a differently charged surface. It can damage components."],
+  ["Antistatic wrist strap", "Worn on the wrist and clipped to bare metal on the case, to keep you and the PC at the same charge."],
+  ["Form factor", "The physical size, shape and layout of a case, motherboard or power supply."],
+  ["ATX12V", "The most common power supply form factor on the market today."],
+  ["EPS12V", "A power supply form factor designed for servers, now also used in high-end desktops."],
+  ["Molex connector", "A keyed power connector used for older drives and some fans."],
+  ["Berg connector", "A small keyed power connector, originally used for floppy drives."],
+  ["3.3 V, 5 V and 12 V", "The common power supply voltages. 3.3 V and 5 V for digital circuits, 12 V for motors in drives and fans."],
+  ["Motherboard", "The backbone of the computer. A printed circuit board with buses that interconnect components."],
+  ["Northbridge", "Chipset part that controls high speed access to the RAM and video card."],
+  ["Southbridge", "Chipset part that lets the CPU communicate with slower devices: hard drives, USB ports, expansion slots."],
+  ["BIOS and UEFI", "Firmware chips on the motherboard that start the computer. UEFI is the modern replacement for BIOS."],
+  ["PGA", "Pin Grid Array. The pins are on the underside of the processor."],
+  ["LGA", "Land Grid Array. The pins are in the socket instead of on the processor."],
+  ["Active cooling", "Cooling that requires power, such as a case fan."],
+  ["Passive cooling", "Cooling that needs no power, such as a heat sink or reducing a component's speed."],
+  ["RAM", "Random access memory. Temporary, volatile working storage for data and programs in use."],
+  ["EEPROM", "ROM that can be erased and rewritten electrically without removing it from the device."],
+  ["SRAM", "Static RAM. The fastest memory, used as cache."],
+  ["DIMM and SODIMM", "Memory modules. DIMM for desktops, the smaller SODIMM for laptops."],
+  ["L1, L2 and L3 cache", "Levels of fast cache memory. L1 is in the CPU, L2 is now in the CPU, L3 is on some high-end CPUs."],
+  ["ECC memory", "Error Correction Code memory. Detects multiple-bit errors and corrects single-bit errors."],
+  ["PCIe", "PCI Express. The current expansion slot standard."],
+  ["NIC", "Network interface card. Adds a wired network connection."],
+  ["SATA", "Serial ATA. The interface that connects internal storage to the motherboard. SATA 3 runs at 6.0 Gb/s."],
+  ["SSD", "Solid state drive. Stores data in flash memory, with no moving parts."],
+  ["NVMe", "A specification that lets SSDs attach to the PCIe bus without special drivers."],
+  ["SSHD", "Solid state hybrid drive. A magnetic HDD with flash memory as a cache."],
+  ["Adapter and converter", "An adapter connects one technology to another. A converter also translates the signal."],
+  ["KVM switch", "Lets one keyboard, monitor and mouse control more than one computer."],
+  ["VR and AR", "Virtual reality replaces what you see. Augmented reality adds images and audio over the real world."],
+  ["Lumens", "The measure of how bright a projector's image is."],
+  ]
+},
+{ n: 2, title: "PC Assembly", open: true,
+  blurb: "The order of a build, how each part is installed, and how to choose parts that are compatible with each other.",
+  q: [
+  ["Safety", "Before working inside a computer, switching it off is not enough. What else must you do?", ["Unplug it", "Hold the power button for ten seconds", "Remove the side panel first", "Disconnect the monitor"], "Turn off and unplug equipment. A plugged-in power supply still feeds standby power to the motherboard."],
+  ["Safety", "Why should you remove watches and jewelry before working inside a computer?", ["Metal conducts electricity and can catch on components", "They attract dust", "They block airflow", "They interfere with Wi-Fi"], "Metal jewelry can short a circuit, cause a burn, or snag on parts."],
+  ["Case and power", "The motherboard form factor must be matched with which two other parts?", ["The case and the power supply", "The CPU and the RAM", "The hard drive and the optical drive", "The monitor and the keyboard"], "The form factor of the motherboard must match the correct type of case and power supply."],
+  ["Case and power", "How much extra wattage should a power supply have beyond what the components need?", ["At least 25%", "At least 5%", "Exactly 10%", "None, it should match exactly"], "Provide enough wattage for the components plus another 25% at a minimum, to allow for upgrades."],
+  ["Case and power", "A component does not list its wattage. How do you calculate it?", ["Multiply its voltage by its amperage", "Divide its voltage by its amperage", "Add its voltage and amperage", "Use 25% of the power supply rating"], "Watts equals volts multiplied by amps."],
+  ["Case and power", "What is an advantage of a larger case fan?", ["It can spin more slowly, which reduces noise", "It uses no power", "It needs no mounting place", "It replaces the CPU heat sink"], "Larger fans can spin more slowly than smaller fans while moving the same air, so they are quieter."],
+  ["Case and power", "What do the status display LEDs on a case tell you?", ["Power, hard drive use, and sleep or hibernate mode", "The CPU temperature", "The amount of RAM installed", "The network speed"], "LEDs on the outside show whether the system has power, when the hard drive is in use, and when the computer is asleep or hibernating."],
+  ["Motherboard components", "During CPU installation, what comes straight after locking the CPU into place?", ["Apply thermal paste to the CPU", "Install the RAM", "Secure the heat sink", "Connect the 24-pin power"], "The order is: orient, press in, lock, apply thermal paste, install the heat sink, secure the heat sink."],
+  ["Motherboard components", "What is the first step when installing RAM?", ["Open the RAM slot levers", "Press down firmly on the module", "Apply thermal paste", "Remove the heat sink"], "Open the levers, orient the module, lower it into the slot, then press down firmly to lock it."],
+  ["Motherboard components", "What must be aligned to the back of the case before the motherboard is lowered in?", ["The I/O plate", "The heat sink", "The power supply", "The optical drive"], "The I/O plate fits the back of the case and the motherboard's ports slide into it."],
+  ["Motherboard components", "What are standoffs for?", ["Holding the motherboard up off the case", "Holding the CPU in its socket", "Locking RAM into its slot", "Securing the side panel"], "Standoffs are installed in the case and the motherboard is screwed into them, keeping the board from touching the metal case."],
+  ["Motherboard components", "In the course tables, which architecture do the Intel sockets (775, 1155, 1150, 2011) use?", ["LGA", "PGA", "DIP", "SODIMM"], "The Intel sockets listed are all Land Grid Array. The AMD sockets listed (AM3, AM3+, FM1, FM2, FM2+) are Pin Grid Array."],
+  ["Motherboard components", "Which two factors limit the speed of a processor?", ["Transmission delay and heat generation", "Hard drive size and RAM type", "Case size and fan speed", "Monitor resolution and cable length"], "Signals take time to pass through transistors and wires, and switching transistors generates heat that causes errors when it gets too high."],
+  ["Motherboard components", "The front-side bus (FSB) is the path between which two parts?", ["The CPU and the Northbridge", "The RAM and the hard drive", "The power supply and the motherboard", "The Southbridge and the USB ports"], "The FSB connects the CPU and the Northbridge. Its frequency is measured in MHz."],
+  ["Motherboard components", "A processor runs at 3200 MHz on a 400 MHz front-side bus. What is the clock multiplier?", ["8", "4", "12", "2800"], "3200 divided by 400 is 8, so the CPU is eight times faster than the FSB."],
+  ["Motherboard components", "Which memory is specialised for servers and high-end workstations and has a control chip on the module?", ["Buffered memory", "Unbuffered memory", "Cache memory", "Video RAM"], "Buffered memory has a control chip that helps the memory controller manage large quantities of RAM. Ordinary computers use unbuffered memory."],
+  ["Motherboard components", "An application keeps locking up and you suspect the RAM. How does the course say to check?", ["Run the RAM test in the BIOS", "Replace the power supply", "Reinstall the application", "Swap the SATA cable"], "To determine whether the problem is the RAM, execute the RAM test in the BIOS."],
+  ["Motherboard components", "Which is NOT one of the factors for choosing a CPU cooling system?", ["Optical media type", "Socket type", "Case size", "Physical environment"], "The four factors are socket type, motherboard physical specifications, case size and physical environment. Optical media type belongs to optical drives."],
+  ["Drives", "Which of these is a sign that an internal storage device is failing?", ["Unusual noises or vibrations", "The power LED stays on", "The case fan speeds up", "The monitor dims"], "Signs include unusual noises, unusual vibrations, error messages, corrupt data, and applications that do not load."],
+  ["Drives", "What is true of SATA and eSATA cables?", ["They are similar but not interchangeable", "They are identical", "eSATA is only for optical drives", "SATA is only for external drives"], "eSATA is the external version. The cables look similar but cannot be swapped."],
+  ["Drives", "Which drive bay width is commonly used for optical drives?", ["5.25 inch", "3.5 inch", "2.5 inch", "1.8 inch"], "5.25 inch for optical drives, 3.5 inch for 3.5 inch HDDs, and 2.5 inch for smaller HDDs and SSDs."],
+  ["Drives", "Which way up should a hard drive be mounted, and why?", ["Metal side up, to help dissipate heat", "Circuit board up, to protect the platters", "On its side, to save space", "It makes no difference"], "The metal face helps dissipate heat from the drive."],
+  ["Drives", "What is the installation tip for screws when mounting a drive?", ["Hand-tighten all of them slightly before using the screwdriver", "Fully tighten each screw before starting the next", "Use only two screws", "Tighten them with the power on"], "Starting all the screws loosely makes it easier to tighten the last two."],
+  ["Drives", "Which optical drive can read and write CDs, DVDs and Blu-ray discs, and also rewrite Blu-ray?", ["BD-RE", "BD-R", "BD-ROM", "DVD-RW"], "BD-RE does everything in the table. BD-R can write Blu-ray but not rewrite it. BD-ROM only reads."],
+  ["Adapter cards", "Which are the four types of PCIe slot?", ["x1, x4, x8 and x16", "x2, x4, x6 and x8", "A, B, C and D", "Mini, Micro, Full and Extended"], "PCIe comes in x1, x4, x8 and x16. The number refers to the data lanes."],
+  ["Adapter cards", "Many video adapter cards need separate power from the power supply. Which connector do they use?", ["A 6-pin or 8-pin power connector", "A Berg connector", "A 24-pin ATX connector", "A SATA data connector"], "The slot alone cannot supply enough power for many video cards."],
+  ["Adapter cards", "The motherboard has no compatible expansion slot for a card the customer needs. What does the course suggest?", ["An external device may be an option", "Replace the power supply", "Remove the graphics card", "Use a longer cable"], "For example, a USB device can provide the same function without an internal slot."],
+  ["Adapter cards", "RAID type is a consideration when choosing which adapter card?", ["Storage controller card", "Sound card", "Capture card", "NIC"], "A storage controller card manages multiple drives. Its considerations include connector quantity and RAID type."],
+  ["Adapter cards", "Signal-to-noise ratio is a consideration when choosing which adapter card?", ["Sound card", "Graphics card", "I/O card", "Storage controller card"], "Sound card considerations are slot type, DSP, port and connection types, and signal-to-noise ratio."],
+  ["Storage", "A customer needs to carry a single presentation between rooms. What does the course recommend?", ["An external flash drive", "An external hard drive", "A tape drive", "A storage controller card"], "A flash drive suits a small amount of data. An external hard drive suits backups and large transfers."],
+  ["Storage", "Which of these is NOT a media card format?", ["BD-RE", "MicroSD", "CompactFlash", "Memory Stick"], "Media card formats include SD, MicroSD, MiniSD, CompactFlash, Memory Stick and xD. BD-RE is a Blu-ray format."],
+  ["Cables", "On a SATA drive, which port does the SATA data cable plug into?", ["The smaller SATA port", "The larger SATA port", "The Molex port", "The USB port"], "The smaller connector is data. The larger one is power."],
+  ["Cables", "Which front panel cable connects to the pins marked PWR_SW?", ["The power button", "The power LED", "The reset button", "The system speaker"], "SW means switch. PWR_SW is the power button and PWR_LED is the power light."],
+  ["Cables", "What is true of system panel connectors?", ["They are not keyed", "They are keyed to fit one way", "They carry 12 V power", "They only connect USB ports"], "They are not keyed, so you must find pin 1 yourself."],
+  ["Cables", "How is pin 1 marked on a front panel cable and on the motherboard?", ["A small arrow on the cable, a plus sign on the board", "A red stripe on the cable, a minus sign on the board", "A notch on the cable, a number on the board", "A label on the cable only"], "Match the arrow on the cable to the plus sign beside the pins."],
+  ["Cables", "After a build, a front panel LED does not light. What is the most likely cause and fix?", ["The connector is the wrong way round. Unplug the PC and turn it around", "The motherboard has failed. Replace it", "The power supply is too small. Upgrade it", "The LED needs a driver. Install it"], "Generally, if a button or LED does not function, the connector is incorrectly oriented."],
+  ["Cables", "The PC has a video adapter card. Where does the monitor cable connect?", ["To the video port on the video adapter", "To the Ethernet port", "To the front panel USB", "To the power supply"], "Connect the video cable to the video port on the video adapter, then tighten its screws."],
+  ],
+  cards: [
+  ["Standoffs", "Spacers installed in the case that the motherboard is screwed into, holding it off the metal."],
+  ["I/O plate", "The metal plate at the back of the case that the motherboard's ports fit through."],
+  ["Thermal paste", "Applied to the CPU before the heat sink is installed, to help heat move from one to the other."],
+  ["Wattage rule", "Add the wattage of every component, then add at least another 25%."],
+  ["Watts", "Voltage multiplied by amperage."],
+  ["Status display", "LEDs on the case that show power, hard drive activity, and sleep or hibernate mode."],
+  ["Transmission delay", "A limit on CPU speed. Moving data through transistors and wires takes time."],
+  ["Heat generation", "A limit on CPU speed. Transistors make heat when switching, and a hot processor produces errors."],
+  ["Front-side bus (FSB)", "The path between the CPU and the Northbridge. Its frequency is measured in MHz."],
+  ["Clock multiplier", "Applied to the FSB speed to set the CPU's frequency. 3200 MHz on a 400 MHz bus is a multiplier of 8."],
+  ["32-bit and 64-bit", "Processor classes. The main difference is the number of instructions handled at one time."],
+  ["Unbuffered memory", "Regular memory for computers. Read directly from the memory banks, so it is faster than buffered."],
+  ["Buffered memory", "Server and workstation memory with a control chip that helps manage large amounts of RAM."],
+  ["Intel sockets in the course", "775, 1155, 1156, 1150, 1366 and 2011. All LGA."],
+  ["AMD sockets in the course", "AM3, AM3+, FM1, FM2 and FM2+. All PGA."],
+  ["Signs of a failing drive", "Unusual noises, unusual vibrations, error messages, corrupt data, applications that do not load."],
+  ["eSATA", "External SATA. Its cables are similar to SATA cables but not interchangeable."],
+  ["Hot-swappable", "A drive that can be connected or removed while the computer is running."],
+  ["5.25 inch bay", "The drive bay commonly used for optical drives."],
+  ["3.5 inch bay", "The drive bay commonly used for 3.5 inch hard drives."],
+  ["2.5 inch bay", "The smallest drive bay, for 2.5 inch hard drives and SSDs."],
+  ["BD-ROM, BD-R and BD-RE", "Blu-ray drives. BD-ROM only reads, BD-R can write, BD-RE can also rewrite."],
+  ["PCIe slot sizes", "x1, x4, x8 and x16."],
+  ["Storage controller card", "Adds drive connections. Considerations include connector quantity and RAID type."],
+  ["I/O card", "Adds input/output ports. Check port type, quantity and extra power needs."],
+  ["Capture card", "Brings in video from an external source. Check resolution, frame rate and input types."],
+  ["Media card formats", "SD, MicroSD, MiniSD, CompactFlash, Memory Stick and xD."],
+  ["24-pin ATX connector", "The main power connector from the power supply to the motherboard."],
+  ["PWR_SW", "The system panel pins for the power button."],
+  ["HDD_LED", "The system panel pins for the drive activity light."],
+  ["Pin 1", "Marked by a small arrow on a front panel cable and a plus sign on the motherboard."],
+  ["Keyed pin extender", "Combines several front panel connectors into one so they cannot be wired incorrectly."],
+  ]
+},
+{ n: 3, title: "Advanced Computer Hardware", open: true,
+  blurb: "Booting and firmware, electrical power, CPU features, RAID, ports and cables, monitors, upgrades, and safe disposal.",
+  q: [
+  ["Boot", "What is the hardware check that the BIOS performs when a computer is booted?", ["Power-on self-test (POST)", "Secure boot", "CPU throttling", "Flashing the BIOS"], "POST checks the main components at every start. A fault is reported by an error message or a beep code."],
+  ["Boot", "Where should you look up the meaning of a beep code?", ["The motherboard documentation", "The Windows Start menu", "The power supply label", "The monitor manual"], "BIOS and motherboard manufacturers use different beep codes, so always consult the motherboard documentation."],
+  ["Boot", "Where are the motherboard BIOS settings saved?", ["In a CMOS memory chip", "On the hard drive", "In the CPU cache", "In the power supply"], "The BIOS reads the configured settings stored in CMOS when the computer boots. CMOS keeps them using a battery."],
+  ["Boot", "A computer shows the wrong time and date at every start. What is the likely cause?", ["The CMOS battery is bad or very low", "The hard drive is failing", "The RAM is the wrong type", "The power supply is too small"], "CMOS retains the BIOS settings with a battery. An incorrect time and date points to that battery."],
+  ["Boot", "Which UEFI feature helps prevent rootkits from taking over the system?", ["Secure boot", "LoJack", "Hyper-Threading", "Overclocking"], "Secure boot ensures the computer boots only a trusted operating system."],
+  ["Boot", "Which chip stores encryption keys, digital certificates, passwords and data?", ["Trusted Platform Module (TPM)", "CMOS", "Northbridge", "GPU"], "The TPM is a chip designed to secure hardware."],
+  ["Boot", "Which security feature lets an owner locate, lock and delete a device?", ["LoJack", "Secure boot", "Drive encryption", "NX bit"], "LoJack is the feature for recovering or wiping a lost or stolen device."],
+  ["Boot", "Which BIOS access level allows all screens to be seen but no settings changed?", ["View only access", "Full access", "Limited access", "No access"], "Limited access allows certain changes such as time and date. View only allows none."],
+  ["Boot", "What is upgrading a modern EEPROM BIOS chip without opening the case called?", ["Flashing the BIOS", "Overclocking", "Striping", "Throttling"], "Early BIOS chips had to be physically replaced. EEPROM can be updated in place."],
+  ["Power", "Which unit of electricity is measured in ohms?", ["Resistance", "Voltage", "Current", "Power"], "Voltage is in volts, current in amperes, resistance in ohms, power in watts."],
+  ["Power", "According to Ohm's Law, what is voltage equal to?", ["Current multiplied by resistance", "Power multiplied by current", "Current divided by resistance", "Power divided by resistance"], "V = IR."],
+  ["Power", "A device runs on 12 V and draws 5 A. How much power does it use?", ["60 W", "17 W", "2.4 W", "7 W"], "P = VI, so 12 x 5 = 60 watts."],
+  ["Power", "What does the voltage selector switch on a dual voltage power supply set?", ["The input voltage, 110V/115V or 220V/230V", "The output voltage to the CPU", "The speed of the power supply fan", "The wattage rating"], "The correct setting depends on the country where the power supply is used."],
+  ["Power", "Which power fluctuation is a reduced voltage level that lasts for a period of time?", ["Brownout", "Blackout", "Spike", "Noise"], "A blackout is a complete loss of power. A brownout is reduced voltage."],
+  ["Power", "Which fluctuation is a sudden increase that lasts a short period and exceeds 100 percent of normal voltage?", ["Spike", "Power surge", "Brownout", "Noise"], "A spike is short and sharp. A surge is a dramatic increase above the normal flow of current."],
+  ["Power", "Why is a standby power supply (SPS) less reliable than a UPS?", ["It takes time to switch over to the battery", "It has no battery", "It cannot be plugged into a wall outlet", "It only works with laptops"], "The SPS battery is on standby during normal operation, so there is a switch-over delay."],
+  ["Power", "What does a surge protector do with extra voltage on the line?", ["Diverts it to the ground", "Stores it in a battery", "Converts it to DC", "Sends it to the CPU"], "A surge suppressor diverts extra electrical voltage to ground."],
+  ["CPU", "Which CPU architecture uses a relatively small set of instructions executed very rapidly?", ["RISC", "CISC", "SCSI", "UEFI"], "RISC is the reduced instruction set. CISC uses a broad set with fewer steps per operation."],
+  ["CPU", "What does Intel's Hyper-Threading do?", ["Executes multiple threads at once so one CPU performs like two", "Connects the CPU to the Northbridge at high speed", "Runs the CPU faster than its specification", "Cools the CPU with water"], "HyperTransport is AMD's high-speed connection between the CPU and Northbridge. Hyper-Threading is about threads."],
+  ["CPU", "What is CPU throttling?", ["Running the processor below its rated speed to save power or reduce heat", "Running the processor above its rated speed", "Letting one processor act as several", "Adding a second processor"], "Throttling is the opposite of overclocking."],
+  ["CPU", "How many cores does a hexa-core CPU have?", ["Six", "Four", "Eight", "Three"], "Dual 2, triple 3, quad 4, hexa 6, octa 8."],
+  ["CPU", "What is true of an integrated GPU?", ["It is often embedded on the CPU and depends on system RAM", "It has its own dedicated video memory", "It is best for intense gaming", "It produces more heat than a dedicated GPU"], "Integrated GPUs cost less and run cooler, and suit less complex tasks."],
+  ["CPU", "A CPU heat sink with no fan is an example of what?", ["Passive cooling", "Active cooling", "Water cooling", "Throttling"], "Add a fan and it becomes active cooling."],
+  ["RAID", "Which RAID term means storing duplicate data on another drive?", ["Mirroring", "Striping", "Parity", "Throttling"], "Mirroring gives redundancy, so one drive can fail without data loss."],
+  ["RAID", "Which RAID level uses striping only, so all data is lost if one drive fails?", ["RAID 0", "RAID 1", "RAID 5", "RAID 10"], "RAID 0 gives performance and capacity but no protection."],
+  ["RAID", "What is the minimum number of drives for RAID 5?", ["3", "2", "4", "5"], "RAID 5 is striping with parity and needs at least three drives."],
+  ["RAID", "Which RAID level can tolerate the loss of two drives?", ["RAID 6", "RAID 0", "RAID 1", "RAID 5"], "RAID 6 uses striping with double parity."],
+  ["RAID", "What is a disadvantage of RAID 1?", ["Capacity is half of total drive size", "All data is lost if one drive fails", "It needs at least four drives", "It cannot be rebuilt"], "Because every drive is duplicated, half the total space is usable."],
+  ["Ports and cables", "Which DVI type carries both analog and digital signals?", ["DVI-I", "DVI-A", "DVI-D", "DVI-X"], "DVI-A is analog, DVI-D is digital, DVI-I is integrated."],
+  ["Ports and cables", "Which port carries the same video as DVI plus digital audio and control signals?", ["HDMI", "VGA", "PS/2", "Serial"], "HDMI carries video and audio in one cable."],
+  ["Ports and cables", "Which USB connector is square with bevelled corners and connects printers?", ["USB Type-B", "USB Type-A", "USB Type-C", "Micro-USB"], "Type-A is the flat rectangle on the computer. Type-B is on the printer or external drive."],
+  ["Ports and cables", "Which connector terminates a UTP cable so it can plug into an Ethernet port?", ["RJ-45", "RJ-11", "BNC", "DB-9"], "RJ-11 is for older telephone cable."],
+  ["Ports and cables", "Which coax cable is used for Internet, cable TV and satellite TV?", ["RG-6", "RG-59", "UTP", "STP"], "RG-6 is heavy gauge for high bandwidth. RG-59 is thinner, for analog video and CCTV."],
+  ["Ports and cables", "On a legacy PS/2 pair, what colour is the keyboard port?", ["Purple", "Green", "Blue", "Pink"], "Purple for keyboard, green for mouse."],
+  ["Monitors", "What is native mode?", ["The image sent by the video adapter matches the monitor's native resolution", "The monitor is using its lowest resolution", "Two monitors show the same picture", "The monitor is running on battery"], "The native resolution is the best resolution for that specific monitor."],
+  ["Monitors", "Which display standard is 1920 x 1080?", ["FHD", "HD", "QHD", "UHD"], "HD is 1280 x 720, FHD 1920 x 1080, QHD 2560 x 1440, UHD 3840 x 2160."],
+  ["Monitors", "What is dot pitch?", ["The distance between pixels on the screen", "The brightness of the screen", "The time for a pixel to change color", "The number of frames per second"], "A smaller dot pitch gives a sharper image."],
+  ["Upgrade", "If you replace a motherboard, which other parts might you have to replace?", ["CPU, heat sink and fan assembly, and RAM", "Monitor, keyboard and mouse", "Hard drive, optical drive and case fans", "Speakers, printer and scanner"], "The new board must also fit the old case, and the power supply must support it."],
+  ["Upgrade", "What must be applied between a new CPU and the heat sink and fan assembly?", ["Thermal compound", "Antistatic spray", "A SATA cable", "A standoff"], "The course gives this as a caution in the CPU upgrade."],
+  ["Environment", "What is a Safety Data Sheet (SDS)?", ["A fact sheet on a material's hazards, handling, first aid and disposal", "A list of a computer's installed parts", "A record of repairs on a computer", "A warranty document"], "It was formerly called a Material Safety Data Sheet (MSDS)."],
+  ],
+  cards: [
+  ["POST", "Power-on self-test. The hardware check the BIOS performs at boot."],
+  ["Beep code", "A pattern of beeps that reports a hardware fault found during POST."],
+  ["BIOS", "A ROM chip with a small program that controls communication between the operating system and the hardware."],
+  ["CMOS", "The memory chip that stores the BIOS settings, kept alive by a battery."],
+  ["UEFI", "Unified Extensible Firmware Interface. The modern firmware, with larger boot drives and secure boot."],
+  ["Secure boot", "A UEFI security standard that makes sure the computer boots only a trusted operating system."],
+  ["TPM", "Trusted Platform Module. A chip that stores encryption keys, digital certificates, passwords and data."],
+  ["LoJack", "A security feature that lets the owner locate, lock and delete a device."],
+  ["Flashing the BIOS", "Updating the BIOS on an EEPROM chip without opening the case."],
+  ["Voltage (V)", "The work required to move a charge from one location to another. Measured in volts."],
+  ["Current (I)", "The amount of electrons moving through a circuit per second. Measured in amperes."],
+  ["Resistance (R)", "The opposition to the flow of current. Measured in ohms."],
+  ["Power (P)", "Voltage multiplied by current. Measured in watts."],
+  ["Ohm's Law", "V = IR. Voltage equals current multiplied by resistance."],
+  ["Blackout", "A complete loss of AC power."],
+  ["Brownout", "A reduced voltage level that lasts for a period of time."],
+  ["Spike", "A sudden, short increase in voltage that exceeds 100 percent of normal."],
+  ["Power surge", "A dramatic increase in voltage above the normal flow of electrical current."],
+  ["UPS", "Uninterruptible power supply. Provides consistent power during brownouts and blackouts."],
+  ["SPS", "Standby power supply. A backup battery on standby, with a switch-over delay."],
+  ["RISC and CISC", "RISC uses a small set of fast instructions. CISC uses a broad set with fewer steps per operation."],
+  ["Hyper-Threading", "Intel feature that runs multiple threads at once so one CPU performs like two."],
+  ["HyperTransport", "AMD's high-speed connection between the CPU and the Northbridge."],
+  ["Overclocking", "Running a processor faster than its specification. Not recommended; it can damage the CPU."],
+  ["CPU virtualization", "A hardware feature that lets one processor act as several, so multiple operating systems can run in parallel."],
+  ["NX bit", "The execute disable bit. Protects areas of memory from malicious attacks by malware."],
+  ["Striping", "Spreading data across drives for performance. One drive failing loses all data."],
+  ["Mirroring", "Storing duplicate data on another drive for redundancy."],
+  ["Parity", "Stored checksums that let lost data be reconstructed."],
+  ["RAID 0, 1, 5, 6 and 10", "0 striping, 1 mirroring, 5 striping with parity, 6 double parity, 10 mirroring and striping."],
+  ["UTP and STP", "Twisted pair cable. STP adds foil or braiding as a shield."],
+  ["RG-6 and RG-59", "Coax cables. RG-6 for Internet and TV, the thinner RG-59 for analog video and CCTV."],
+  ["Native resolution", "The best resolution for a specific monitor."],
+  ["Refresh rate", "How often the monitor redraws the screen, measured in hertz."],
+  ["HD, FHD, QHD and UHD", "1280 x 720, 1920 x 1080, 2560 x 1440 and 3840 x 2160."],
+  ["SDS", "Safety Data Sheet. Summarises a material's hazards, safe handling, first aid and disposal."],
+  ]
+},
+{ n: 4, title: "Preventive Maintenance and Troubleshooting", open: true,
+  blurb: "Keeping a PC healthy, the six-step troubleshooting process, and common hardware problems with their causes and solutions.",
+  q: [
+  ["Preventive maintenance", "Preventive maintenance plans are developed based on which two factors?", ["Computer location or environment, and computer use", "Computer brand and price", "Monitor size and keyboard type", "Number of users and their ages"], "A dusty site needs more cleaning. A high-traffic network needs more scanning."],
+  ["Preventive maintenance", "Why is accumulated dust inside a computer a problem?", ["It prevents air flow and reduces the cooling of components", "It increases the monitor's brightness", "It makes the hard drive spin faster", "It improves the conduction of electricity"], "Hot components are more likely to break down."],
+  ["Preventive maintenance", "What should be used to remove dust from the inside of a computer?", ["Compressed air, a low-air-flow ESD vacuum cleaner and a lint-free cloth", "A household vacuum cleaner and a wet cloth", "A hair dryer and a paintbrush", "Glass cleaner sprayed onto the components"], "An ordinary vacuum generates static. Liquids must not be sprayed onto components."],
+  ["Preventive maintenance", "How should a cleaning product be used on the outside of a case?", ["Put a small amount onto a cloth, then wipe", "Spray it directly onto the case", "Pour it over the vents", "Apply it to the fan blades"], "Spraying directly lets liquid into vents and switches."],
+  ["Preventive maintenance", "Which describes an optimal operating environment for a computer?", ["Clean, free of contaminants, and within the manufacturer's temperature and humidity range", "As cold and as dry as possible", "Warm and humid", "Dusty but well lit"], "Both very low and very high humidity cause problems."],
+  ["Preventive maintenance", "Which task belongs on a software maintenance schedule?", ["Update virus definition files and scan for viruses and spyware", "Replace the CMOS battery", "Clean the heat sink", "Reseat the RAM"], "The schedule also covers updates, removing unused programs, and scanning and defragmenting hard drives."],
+  ["Preventive maintenance", "Which of these is a component to inspect for dust and damage?", ["CPU heat sink and fan assembly", "The operating system licence", "The virus definition files", "The customer's invoice"], "The checklist is heat sink and fan, RAM, storage devices, adapter cards, cables, power devices, keyboard and mouse."],
+  ["Six steps", "What is the first step of the troubleshooting process?", ["Identify the problem", "Establish a theory of probable cause", "Test the theory", "Document findings"], "The order is identify, theory, test, plan and implement, verify, document."],
+  ["Six steps", "What is the second step of the troubleshooting process?", ["Establish a theory of probable cause", "Identify the problem", "Verify full system functionality", "Implement the solution"], "After gathering information, you list the likely causes, simplest first."],
+  ["Six steps", "Which step comes immediately after testing the theory to determine the cause?", ["Establish a plan of action to resolve the problem and implement the solution", "Document findings, actions, and outcomes", "Identify the problem", "Verify full system functionality"], "Step 4 is plan and implement."],
+  ["Six steps", "What is the last step of the troubleshooting process?", ["Document findings, actions, and outcomes", "Verify full system functionality", "Implement the solution", "Test the theory"], "Documentation closes the job and builds the repair history."],
+  ["Six steps", "What must you always do before you begin troubleshooting?", ["Follow the necessary precautions to protect data on the computer", "Replace the power supply", "Reinstall the operating system", "Update the BIOS"], "Hardware can be replaced. The customer's data cannot."],
+  ["Six steps", "Rebooting, checking applications, verifying the network and printing a document belong to which step?", ["Verify full system functionality", "Identify the problem", "Establish a theory", "Document findings"], "Step 5 proves the whole system works, and adds preventive measures if applicable."],
+  ["Six steps", "\"Incorrect boot order in BIOS setup\" is an example from which step?", ["Establish a theory of probable cause", "Document findings", "Verify full system functionality", "Identify the problem"], "It is one of the simple probable causes listed in step 2."],
+  ["Six steps", "In which step do you consult helpdesk repair logs, manuals and technical websites?", ["Establish a plan of action and implement the solution", "Identify the problem", "Verify full system functionality", "Document findings"], "If quick tests do not solve it, further research is needed in step 4."],
+  ["Six steps", "Which of these is part of documenting findings, actions and outcomes?", ["Have the customer verify that the problem has been solved", "Ensure the surge protector is turned on", "Ask open-ended questions", "Verify the boot order"], "Step 6 also covers paperwork, components used and time spent."],
+  ["Gathering information", "Which is a closed-ended question?", ["Is the power light on?", "What happens when you switch it on?", "Can you describe the noise?", "What changed recently?"], "Closed-ended questions need a yes or no, or a short fact."],
+  ["Gathering information", "What is the purpose of an open-ended question?", ["To let the customer explain the problem in their own words", "To get a yes or no answer", "To record the customer's phone number", "To test the theory"], "Start with open questions, then narrow down with closed ones."],
+  ["Gathering information", "Which group lists information gathered from the computer itself?", ["Error messages, beep sequences, LEDs and POST", "Company name, contact name and address", "Open-ended and closed-ended questions", "Notes, journal and history of repairs"], "The rest comes from the customer."],
+  ["Common problems", "The clock no longer keeps the correct time and BIOS settings change on reboot. What is the probable cause?", ["The CMOS battery is loose or drained", "The power supply has failed", "The RAM is not seated", "The video cable is loose"], "Secure the battery, or replace it."],
+  ["Common problems", "A computer will not turn on. Which is a solution from the course table?", ["Plug the computer into a known good AC outlet", "Defragment the hard drive", "Update the virus definitions", "Lower the screen resolution"], "Work from the wall towards the computer: outlet, cord, switch, voltage setting, power button connector, power supply."],
+  ["Common problems", "There is smoke or a smell of burning electronics and the computer turns off unexpectedly. What is the probable cause?", ["The power supply is starting to fail", "The CMOS battery is drained", "The monitor is in VGA mode", "The optical disc is upside down"], "Replace the power supply. Stop using the computer straight away."],
+  ["Common problems", "The computer does not recognize a storage device. Which is NOT a probable cause in the course table?", ["The monitor resolution is too low", "The data cable is loose", "The jumpers are set incorrectly", "The storage device settings in BIOS are incorrect"], "The causes are loose power or data cables, jumpers, a failed device, or BIOS settings."],
+  ["Common problems", "The computer will not boot or it locks up because the CPU has overheated. Which is a listed solution?", ["Replace the CPU fan or add fans to the case", "Replace the CMOS battery", "Reset the jumpers", "Use a known good power cord"], "The solutions are to reinstall the CPU, replace the CPU fan, or add case fans."],
+  ["Common problems", "After upgrading to a dual core CPU, Task Manager shows only one CPU graph. What is the solution?", ["Update the BIOS firmware", "Replace the RAM", "Reinstall the video driver", "Change the power cord"], "The BIOS does not recognize the dual core CPU."],
+  ["Common problems", "A laptop's external display has power but shows no image. What does the course suggest?", ["Use the Fn key with the multi-purpose key to toggle to the external display", "Replace the CMOS battery", "Defragment the hard drive", "Reset the jumpers"], "Also reconnect or replace the video cable."],
+  ["Common problems", "What does the term \"known good\" mean, as in a known good power supply?", ["A part you are certain works", "A part that is brand new", "A part from the same manufacturer", "A part that is under warranty"], "Swapping in a known good part proves or rules out a cause."],
+  ["Common problems", "The computer reboots without warning or shows the BSOD because the CPU multiplier is set too high. What is the solution?", ["Reset to the factory default settings for the motherboard", "Add more hard drives", "Replace the monitor cable", "Install a second optical drive"], "Settings pushed too high in the BIOS cause instability."],
+  ["Common problems", "Power supply problems are often caused by a faulty power supply, loose connections, and what else?", ["Inadequate wattage", "Incorrect media formats", "Corrupted drivers", "Incorrect refresh rate"], "New components can demand more power than the supply provides."],
+  ["Reference tools", "Which personal reference tool is a detailed list of problems and repairs with dates, parts and customer information?", ["History of repairs", "Notes", "Quick reference guide", "Invoice"], "It shows what work has been performed on a specific computer in the past."],
+  ["Reference tools", "Why make notes as you go through a repair?", ["To avoid repeating steps and decide what to do next", "To increase the bill", "To replace the invoice", "To satisfy the manufacturer's warranty"], "Notes keep a long repair from going in circles."],
+  ["Reference tools", "Which is an Internet reference tool listed in the course?", ["Manufacturer FAQs", "Power supply tester", "Compressed air", "Lint-free cloth"], "Others are search engines, news groups, online manuals, forums and chat, and technical websites."],
+  ],
+  cards: [
+  ["Preventive maintenance", "Regular, planned care that reduces hardware and software problems before they happen."],
+  ["Two planning factors", "Computer location or environment, and computer use."],
+  ["Removing internal dust", "Compressed air, a low-air-flow ESD vacuum cleaner, and a small lint-free cloth."],
+  ["Inspection checklist", "Heat sink and fan, RAM, storage devices, adapter cards, cables, power devices, keyboard and mouse."],
+  ["Optimal environment", "Clean, free of contaminants, and within the manufacturer's temperature and humidity range."],
+  ["Software maintenance schedule", "Install updates, update virus definitions and scan, remove unused programs, scan and defragment hard drives."],
+  ["Step 1", "Identify the problem."],
+  ["Step 2", "Establish a theory of probable cause."],
+  ["Step 3", "Test the theory to determine the cause."],
+  ["Step 4", "Establish a plan of action to resolve the problem and implement the solution."],
+  ["Step 5", "Verify full system functionality and, if applicable, implement preventive measures."],
+  ["Step 6", "Document findings, actions, and outcomes."],
+  ["Open-ended question", "Lets the customer explain the problem in their own words."],
+  ["Closed-ended question", "Needs a yes or no, or a short factual answer."],
+  ["Evidence from the computer", "Error messages, beep sequences, LEDs and POST."],
+  ["Simple probable causes", "Powered off, outlet off, surge protector off, loose cables, non-bootable disk, wrong boot order."],
+  ["Where to research", "Helpdesk logs, other technicians, manufacturer FAQs, manuals, technical websites, forums, Internet search."],
+  ["Verifying a fix", "Reboot, test applications, check network and Internet, print a document, check devices, check for errors."],
+  ["Known good", "A part you are certain works, used to prove or rule out a cause."],
+  ["Storage problems: usual causes", "Loose or incorrect cables, incorrect drive and media formats, incorrect jumper and BIOS settings."],
+  ["Motherboard problems: usual causes", "Incorrect or loose cables, failed components, incorrect drivers, corrupted updates."],
+  ["Power supply problems: usual causes", "A faulty power supply, loose connections, inadequate wattage."],
+  ["CPU and memory problems: usual causes", "Faulty installations, incorrect BIOS settings, inadequate cooling, compatibility issues."],
+  ["Display problems: usual causes", "Incorrect settings, loose connections, incorrect or corrupted drivers."],
+  ["Clock wrong, BIOS settings lost", "The CMOS battery is loose or drained."],
+  ["Smoke or burning smell", "The power supply is starting to fail. Replace it."],
+  ["New multi-core CPU shows one graph", "The BIOS does not recognize it. Update the BIOS firmware."],
+  ["Notes", "Made during a repair, to avoid repeating steps."],
+  ["Journal", "Problems, solutions tried, repair steps, configuration changes and parts used."],
+  ["History of repairs", "A dated list of problems and repairs for a specific computer."],
+  ]
+},
+{ n: 5, title: "Networking Concepts", open: true,
+  blurb: "Network types and internet connections, TCP and UDP, port numbers, wireless standards, network services, devices, and cables.",
+  q: [
+  ["Network types", "Which network type commonly uses Bluetooth to connect mice, keyboards, phones and tablets?", ["PAN", "LAN", "MAN", "WAN"], "A personal area network covers the devices around one person."],
+  ["Network types", "Which network type spans a city?", ["MAN", "PAN", "WLAN", "VLAN"], "Metropolitan area network. A WAN spans a larger geographical area."],
+  ["Network types", "Which network type groups users by administratively defined boundaries such as department or floor?", ["VLAN", "WMN", "PAN", "MAN"], "A virtual LAN is based on logical connections, not physical ones."],
+  ["Network types", "What is a VPN?", ["A method of connecting to a network, such as a company network, across an unsecure network", "A network that spans a city", "A group of access points linked together", "A network of Bluetooth devices"], "A virtual private network protects data crossing a network such as the internet."],
+  ["Network types", "By default, all switch ports are assigned to which VLAN?", ["VLAN 1", "VLAN 0", "VLAN 10", "VLAN 100"], "Ports are moved to other VLANs by configuring them."],
+  ["Network types", "What is required for a device in one VLAN to send something to a device in a different VLAN?", ["The services of a router", "A longer cable", "A hub", "A repeater"], "VLANs are separate networks, so traffic between them must be routed."],
+  ["Internet connections", "Which connection type uses phone lines and needs a filter on ports that connect to a phone?", ["DSL", "Cable", "Fiber", "Satellite"], "DSL carries voice and data on different frequencies over phone lines."],
+  ["Internet connections", "Which connection shares a traditional cable TV network with multiple subscribers?", ["Cable", "DSL", "Line of sight wireless", "Cellular"], "A cable modem connects to the cable TV network."],
+  ["Internet connections", "Why is standard satellite not a good solution for gaming, VoIP and video conferencing?", ["They are time-sensitive applications", "It cannot reach remote areas", "It needs a phone line", "It only works at night"], "The delay on a standard satellite link affects time-sensitive applications. LEO satellites have much lower latency."],
+  ["Internet connections", "Which connection type requires a clear path and is affected by weather?", ["Line of sight wireless", "Fiber", "DSL", "Cable"], "It uses radio signals between two points."],
+  ["Internet connections", "What is it called when a cell phone lets another device use its cellular connection to reach the internet?", ["Tethering or a hotspot", "Load balancing", "Port mirroring", "Powerline networking"], "The other device connects by Wi-Fi, Bluetooth or USB cable."],
+  ["TCP and UDP", "Which transport protocol is reliable, acknowledges data and resends lost data?", ["TCP", "UDP", "DHCP", "DNS"], "TCP also delivers data in sequenced order."],
+  ["TCP and UDP", "Which statement describes UDP?", ["A best-effort protocol with very little overhead and no acknowledgment", "A reliable protocol that numbers and tracks segments", "A protocol that assigns IP addresses", "A protocol that translates domain names"], "UDP is fast and unreliable, suited to IP telephony and streaming live video."],
+  ["TCP and UDP", "Which is one of TCP's three basic operations of reliability?", ["Retransmitting any unacknowledged data after a period of time", "Sending data to all ports", "Assigning addresses from a scope", "Encrypting the data"], "The other two are numbering and tracking segments, and acknowledging received data."],
+  ["Ports", "Which port does HTTPS use?", ["443", "80", "25", "110"], "HTTP uses 80. HTTPS uses 443."],
+  ["Ports", "Which protocol uses port 53?", ["DNS", "DHCP", "SMTP", "SSH"], "DNS finds the IP address associated with a domain name."],
+  ["Ports", "Which protocol and port are used to send email?", ["SMTP, port 25", "POP3, port 110", "IMAP, port 143", "LDAP, port 389"], "POP3 and IMAP retrieve email. SMTP sends it."],
+  ["Ports", "Which port does SSH use?", ["22", "23", "21", "3389"], "Telnet uses 23 and is insecure. SSH on 22 is preferred."],
+  ["Ports", "Which protocol uses port 3389?", ["RDP", "SMB", "SNMP", "TFTP"], "Remote Desktop Protocol gives access to the graphical desktop of a remote machine."],
+  ["Ports", "Which ports does DHCP use?", ["67 and 68", "20 and 21", "161 and 162", "137 to 139"], "The server uses UDP 67 and the client uses UDP 68."],
+  ["Ports", "Which protocol on port 445 shares files and printers on Microsoft networks?", ["SMB", "AFP", "FTP", "SLP"], "Server Message Block, also listed as SMB/CIFS."],
+  ["Wireless", "Which 802.11 standards operate only in the 5 GHz band?", ["802.11a and 802.11ac", "802.11b and 802.11g", "802.11n and 802.11ax", "802.11b and 802.11n"], "b and g are 2.4 GHz only. n and ax use both bands."],
+  ["Wireless", "What is the maximum speed of 802.11n (Wi-Fi 4)?", ["600 Mbps", "54 Mbps", "11 Mbps", "6.9 Gbps"], "It also has the longest indoor range in the table, 230 ft (70 m)."],
+  ["Wireless", "How many devices can Bluetooth connect to create a PAN?", ["Up to 7", "Up to 232", "Up to 65,000", "Up to 2"], "Bluetooth is the 802.15.1 standard."],
+  ["Wireless", "What is true of a passive RFID tag?", ["It relies on the RFID reader to activate and read it", "It has a battery and broadcasts up to 100 meters", "It must be paired like Bluetooth", "It uses the cellular network"], "Active tags have a battery. Passive tags do not."],
+  ["Wireless", "Which smart home standard is IEEE 802.15.4 and needs a coordinator?", ["Zigbee", "Z-Wave", "NFC", "LTE"], "Zigbee supports up to 65,000 devices. Z-Wave is proprietary and supports 232."],
+  ["Wireless", "Which cellular generation supports AR, VR, smart homes and smart cars, with downloads up to 3 Gb/s?", ["5G", "3G", "4G", "2.5G"], "6G is still in development."],
+  ["Services", "Which server automatically assigns IP addressing information to hosts?", ["DHCP server", "DNS server", "Proxy server", "Syslog server"], "It leases addresses from a scope."],
+  ["Services", "What are the four steps a DHCP client uses to obtain a lease?", ["Discover, offer, request, acknowledge", "Request, reply, renew, release", "Query, match, respond, connect", "Identify, test, plan, verify"], "Remembered as DORA."],
+  ["Services", "What does a DNS server do?", ["Translates domain names to IP addresses", "Stores network messages from devices", "Distributes requests across servers", "Assigns IP addresses to hosts"], "The client then uses the IP address to reach the server."],
+  ["Services", "Which protocols are used to retrieve email?", ["POP and IMAP", "SMTP and FTP", "HTTP and HTTPS", "SSH and Telnet"], "SMTP is used to send email."],
+  ["Services", "Which server acts on behalf of a client, hiding the real internal host, and caches web pages?", ["Proxy server", "Authentication server", "Print server", "File server"], "Caching frequently accessed pages saves bandwidth."],
+  ["Services", "What does AAA stand for?", ["Authentication, Authorization, and Accounting", "Access, Address, and Allocation", "Analog, Asymmetric, and Always-on", "Acknowledge, Accept, and Assign"], "An authentication server allows access to a network device or a particular network."],
+  ["Devices", "Which device receives data on one port and sends it to all other ports?", ["Hub", "Switch", "Router", "Bridge"], "A switch sends data only to the device whose MAC address matches."],
+  ["Devices", "What does an Ethernet switch record for each connected device?", ["Its MAC address", "Its IP address", "Its domain name", "Its port number"], "The switch keeps these in a MAC address table."],
+  ["Devices", "What is the job of a router?", ["To connect networks, using IP addresses to forward traffic", "To regenerate a weak signal", "To attach cables at a central point", "To store log messages"], "A router can also be an integrated device with switching and wireless."],
+  ["Devices", "What do firewalls use to decide whether data is permitted or denied?", ["Access control lists (ACLs)", "MAC address tables", "DHCP scopes", "TXT resource records"], "ACLs are rules."],
+  ["Devices", "What is the difference between an IDS and an IPS?", ["An IDS is passive. An IPS takes action when needed", "An IDS is wireless. An IPS is wired", "An IDS routes traffic. An IPS switches it", "There is no difference"], "Both monitor traffic. Only the IPS acts on it."],
+  ["Devices", "What is a UTM?", ["An all-in-one security appliance", "A type of fiber connector", "A wireless standard", "A cable testing tool"], "Universal Threat Management can include firewall, IDS/IPS, proxy, email filtering and VPN services."],
+  ["Devices", "Which PoE standard can supply up to 25 watts?", ["802.3at (PoE+)", "802.3af", "802.3bt", "802.11ac"], "802.3af supplies up to 13 watts. 802.3bt supplies 51 or 73 watts."],
+  ["Devices", "What is Ethernet over Power?", ["Using existing electrical wiring to create a network", "Sending power along a network cable", "A switch that powers cameras", "A fiber link between buildings"], "It is also called powerline networking. Power over Ethernet is the reverse."],
+  ["Cables", "Which tool securely attaches an RJ-45 connector to a cable?", ["Crimper", "Punch down tool", "Tone generator", "Loopback adapter"], "A punch down tool terminates wires into termination blocks."],
+  ["Cables", "Which tool is used to check a port?", ["Loopback adapter", "Wire stripper", "Crimper", "Wi-Fi analyzer"], "It returns the port's own signal to it."],
+  ["Cables", "Which twisted-pair category first reached 1 Gb/s?", ["Cat 5e", "Cat 5", "Cat 3", "Cat 6a"], "Cat 5 carries 100 Mb/s. Cat 5e carries 1 Gb/s at 100 MHz."],
+  ["Cables", "What is the wire colour on pin 1 of the T568B scheme?", ["White/orange", "White/green", "Blue", "Brown"], "T568B begins white/orange, orange. T568A begins white/green, green."],
+  ["Cables", "What is true of STP compared with UTP?", ["Better protection against EMI and RFI, but more expensive and harder to install", "Cheaper and easier to install", "It uses light to transmit signals", "It has only two pairs of wires"], "UTP is the most common, with four pairs of color-coded wires."],
+  ["Cables", "Which describes single-mode fiber?", ["A small core, laser light, one beam, long distances", "A larger core, LEDs, light at different angles", "Copper wires in four twisted pairs", "A centre conductor with a braided shield"], "Multimode has a larger core, uses LEDs, and is cheaper."],
+  ["Cables", "Why are fiber-optic cables not affected by EMI or RFI?", ["They use light to transmit signals", "They have a thicker jacket", "They are always buried underground", "They use a higher voltage"], "Interference affects electrical signals in copper."],
+  ],
+  cards: [
+  ["PAN", "Personal area network. Commonly uses Bluetooth to connect devices around one person."],
+  ["LAN", "Local area network. A wired network of a switch and devices in a limited geographical area."],
+  ["VLAN", "Virtual LAN. Groups users by administratively defined boundaries such as department or floor."],
+  ["WLAN", "Wireless LAN. Connects wireless devices using an access point."],
+  ["WMN", "Wireless mesh network. Multiple access points connected together to expand the wireless network."],
+  ["MAN and WAN", "A MAN spans a city. A WAN spans a large geographical area."],
+  ["VPN", "A method of connecting to a network across an unsecure network."],
+  ["DSL", "Always-on internet over phone lines. Needs a filter on ports that connect to a phone."],
+  ["FTTC and FTTP", "Fiber to the curb, then coax to the home. Fiber to the premises brings fiber to the building."],
+  ["Line of sight wireless", "Internet by radio signal. Needs a clear path, and weather affects it."],
+  ["Tethering and hotspot", "Another device using a cell phone's cellular connection, by Wi-Fi, Bluetooth or USB."],
+  ["TCP", "Reliable transport. Numbers and tracks segments, acknowledges data, retransmits what is lost."],
+  ["UDP", "Best-effort transport. Fast, low overhead, no acknowledgment."],
+  ["Ports 20 and 21", "FTP."],
+  ["Port 22 and port 23", "SSH on 22 (secure). Telnet on 23 (insecure)."],
+  ["Port 25", "SMTP. Sends email."],
+  ["Port 53", "DNS."],
+  ["Ports 67 and 68", "DHCP. Server on 67, client on 68."],
+  ["Port 80 and port 443", "HTTP on 80. HTTPS on 443."],
+  ["Port 110 and port 143", "POP3 on 110. IMAP on 143. Both retrieve email."],
+  ["Port 389", "LDAP. User identity directory information."],
+  ["Port 445", "SMB/CIFS. File and printer sharing."],
+  ["Port 3389", "RDP. Remote desktop."],
+  ["802.11 bands", "a and ac: 5 GHz. b and g: 2.4 GHz. n and ax: both."],
+  ["Bluetooth", "802.15.1. Up to 7 devices in a PAN. 2.4 to 2.485 GHz."],
+  ["RFID", "Tags that identify items. Passive tags are read by a reader. Active tags have a battery."],
+  ["NFC", "Near Field Communication. Devices must be in close proximity. Used for payments."],
+  ["Zigbee and Z-Wave", "Smart home mesh standards. Zigbee: 802.15.4, 65,000 devices. Z-Wave: proprietary, 232 devices."],
+  ["DHCP", "Automatically assigns IP addressing. Discover, offer, request, acknowledge."],
+  ["DNS", "Translates domain names to IP addresses."],
+  ["Proxy server", "Acts on behalf of a client, hides the internal host, and caches web pages."],
+  ["AAA", "Authentication, Authorization, and Accounting."],
+  ["Syslog server", "Stores network messages sent by networking devices."],
+  ["Load balancer", "Placed in front of servers to distribute requests evenly."],
+  ["Hub, switch, router", "A hub sends to all ports. A switch forwards by MAC address. A router connects networks by IP address."],
+  ["Firewall and ACL", "A firewall protects a network. Access control lists are its rules to permit or deny data."],
+  ["IDS and IPS", "An IDS monitors passively. An IPS monitors and takes action."],
+  ["UTM", "Universal Threat Management. An all-in-one security appliance."],
+  ["PoE", "Power over Ethernet. 802.3af 13 W, 802.3at 25 W, 802.3bt 51 or 73 W."],
+  ["Patch panel", "A centralized place where network cables attach at the back, with patch cables on the front."],
+  ["Crimper and punch down tool", "A crimper attaches an RJ-45 connector. A punch down tool terminates wires into blocks."],
+  ["Tone generator and loopback adapter", "A tone generator traces a cable. A loopback adapter checks a port."],
+  ["Cat 5, 5e, 6", "100 Mb/s; 1 Gb/s at 100 MHz; 1 Gb/s at 250 MHz."],
+  ["T568A", "White/green, green, white/orange, blue, white/blue, orange, white/brown, brown."],
+  ["T568B", "White/orange, orange, white/green, blue, white/blue, green, white/brown, brown."],
+  ["SMF and MMF", "Single-mode: small core, laser, long distance. Multimode: larger core, LEDs, cheaper."],
+  ["ST, SC and LC", "Fiber-optic connectors."],
+  ]
+},
+
+{ n: 6, title: "Applied Networking", open: true,
+  blurb: "MAC, IPv4 and IPv6 addressing, configuring a NIC and a wireless router, firewall settings, IoT, and network troubleshooting.",
+  q: [
+  ["Addressing", "When a laptop is moved to a different network, what happens to its addresses?", ["The MAC address stays the same, but the IPv4 and IPv6 addresses change", "The MAC address changes, but the IP addresses stay the same", "All of its addresses change", "None of its addresses change"], "A MAC address is part of the NIC. IP addresses are assigned by the company or internet provider."],
+  ["Addressing", "Which command and switch shows the MAC (physical) address on a Windows computer?", ["ipconfig /all", "ipconfig /release", "ping -t", "nslookup"], "ipconfig /all also shows the DHCP and DNS servers."],
+  ["Addressing", "How long is a MAC address?", ["48 bits", "32 bits", "64 bits", "128 bits"], "It is written as 12 hexadecimal characters. IPv4 is 32 bits and IPv6 is 128 bits."],
+  ["Addressing", "What determines which part of an IPv4 address is the network part?", ["The subnet mask", "The default gateway", "The DNS server", "The MAC address"], "An IPv4 address has a network part and a host part."],
+  ["Addressing", "For the address 192.168.200.8 with subnet mask 255.255.255.0, what is the host portion?", ["8", "192", "192.168", "200.8"], "The mask marks the first three numbers as network, leaving 8 as the host."],
+  ["Addressing", "How long is an IPv6 address?", ["128 bits", "32 bits", "48 bits", "64 bits"], "It is written as eight groups of four hexadecimal characters."],
+  ["Addressing", "Which is the correctly compressed form of 2001:0DB8:0000:1111:0000:0000:0000:0200?", ["2001:DB8:0:1111::200", "2001:DB8::1111::2", "2001:DB8:0:1111:0:0:0:2", "21:DB8:0:1111::200"], "Omit leading 0s and replace one run of all-0 segments with a double colon. Trailing 0s are kept."],
+  ["Addressing", "In IPv6 compression, how many times may the double colon (::) be used in one address?", ["Once", "Twice", "As often as needed", "Never"], "Used more than once, nobody could tell how many groups each stood for."],
+  ["Addressing", "Which four items are needed in a static configuration to communicate with other networks and the internet?", ["IP address, subnet mask, default gateway, DNS server", "MAC address, SSID, channel, passphrase", "Port, protocol, scope, lease", "Host name, domain, workgroup, user"], "The gateway is the router's address. The DNS server converts names to IP addresses."],
+  ["Addressing", "What is the default gateway?", ["The address of the router, so information can be sent to other networks", "The address of the DNS server", "The first address in the DHCP scope", "The MAC address of the switch"], "Without it, a device can reach its own network but not others."],
+  ["Addressing", "Where does a device get its IP addressing with dynamic addressing?", ["From a DHCP server", "From the DNS server", "From the NIC manufacturer", "From the subnet mask"], "In Windows the setting is to obtain an IP address automatically."],
+  ["Addressing", "A Windows computer has the IPv4 address 169.254.20.7. What does this mean?", ["It could not obtain an IPv4 address, so it is using a link-local address", "It has a static address", "It is connected to a VPN", "It is the DHCP server"], "A device uses a link-local IPv4 address if it cannot obtain one from a DHCP server."],
+  ["Addressing", "What is true of IPv6 link-local addresses?", ["An IPv6 device must always have one", "They appear only when DHCP fails", "They begin with 169.254", "They are routed across the internet"], "They begin with fe80 and are normal, not a sign of a fault."],
+  ["DNS records", "Which DNS record resolves a domain name to an IPv4 address?", ["A", "AAAA", "MX", "TXT"], "AAAA resolves a name to an IPv6 address."],
+  ["DNS records", "Which DNS record identifies the email servers that accept mail for a domain?", ["MX", "A", "AAAA", "TXT"], "Mail Exchange records include a priority value. The lowest integer is preferred."],
+  ["DNS records", "Where does a DNS server store its list of resource records?", ["In a DNS zone database", "In the MAC address table", "In the DHCP scope", "In the CMOS chip"], "If it finds no match there, it queries a higher-level DNS server."],
+  ["NIC", "Where in Windows do you view or update a NIC's driver?", ["Device Manager, under Network adapters", "Disk Management", "Task Scheduler", "Windows Defender"], "Right-click the NIC and choose Properties or Update driver."],
+  ["NIC", "What is ICMP used for?", ["Testing connectivity and sending control and error messages", "Assigning IP addresses", "Encrypting wireless traffic", "Translating domain names"], "The ping command is part of ICMP."],
+  ["NIC", "What should you check when installing a wireless NIC?", ["That the antenna is positioned for optimum reachability", "That the SATA cable is connected", "That the CMOS battery is new", "That the monitor is in native mode"], "A poorly placed antenna weakens the signal."],
+  ["Router setup", "When connecting a home network, where does the cable from the broadband modem go?", ["To the wireless router's internet port", "To one of the router's switch ports", "Directly to the PC", "To the printer"], "Devices connect to the switch ports. The modem connects to the internet port."],
+  ["Router setup", "What should you change immediately after first logging in to a wireless router?", ["The default username and password", "The cable category", "The MAC address", "The subnet mask of the modem"], "Default credentials are widely known."],
+  ["Router setup", "After changing a router's DHCP range, which commands renew the address on a Windows PC?", ["ipconfig /release then ipconfig /renew", "ping -t then ping -n", "nslookup then tracert", "ipconfig /all then ipconfig /flushdns"], "The first gives up the old lease. The second requests a new one."],
+  ["Router setup", "Which of these is a basic wireless setting you configure on a router?", ["The SSID", "The MX record", "The voltage selector", "The boot order"], "The basic wireless settings are network mode, SSID, channel, security mode and passphrase."],
+  ["Router setup", "What does NAT do?", ["Converts private IPv4 addresses to internet-routable public IPv4 addresses", "Prioritizes specific traffic types", "Blocks known web sites", "Assigns MAC addresses"], "It lets many internal devices share one public address."],
+  ["Router setup", "What does Quality of Service (QoS) configuration allow?", ["Prioritization of specific traffic types", "Automatic opening of ports", "Translation of domain names", "Extension of the wireless range"], "Time-sensitive traffic such as voice and video can go first."],
+  ["Firewall settings", "What does the course say about UPnP?", ["It is not secure and is a security risk", "It is the most secure setting", "It encrypts wireless traffic", "It blocks all inbound ports"], "UPnP lets devices add themselves to a network and open ports without configuration."],
+  ["Firewall settings", "What is a DMZ?", ["A network that provides services to an untrusted network", "A list of blocked web sites", "A wireless security mode", "A type of IP address"], "A DMZ often contains servers."],
+  ["Firewall settings", "What is the difference between port forwarding and port triggering?", ["Forwarding allows traffic to specific ports. Triggering opens a temporary opening for an application or game", "Forwarding is for IPv6. Triggering is for IPv4", "Forwarding blocks ports. Triggering opens them permanently", "There is no difference"], "A triggered opening closes again afterwards."],
+  ["Firewall settings", "What does MAC address filtering specify?", ["The MAC addresses that are allowed on the wireless network", "The ports that are forwarded", "The web sites that are blocked", "The DHCP address range"], "Each permitted device's MAC address is entered in the filter list."],
+  ["Firewall settings", "Which allows users access to specific IP addresses only?", ["Whitelisting", "Blacklisting", "UPnP", "Port triggering"], "Blacklisting blocks known web sites and allows everything else."],
+  ["Troubleshooting", "All devices on a network have a problem. Where does the course say to start?", ["In the network room where all the devices are connected", "At the newest PC", "At the printer", "At the furthest wireless device"], "If only one device has the problem, start with that device."],
+  ["Troubleshooting", "Which is a common cause of network problems listed in step 2?", ["Loose cable connections", "A drained CMOS battery", "A missing thermal compound", "A wrong display resolution"], "Others are an improperly installed NIC, ISP down, low wireless signal, invalid IP address, and DNS or DHCP server issues."],
+  ["Troubleshooting", "NIC LED lights are not lit. What is a probable cause?", ["The network cable is unplugged or damaged", "The DNS server is down", "The default gateway is wrong", "The SSID is hidden"], "Reconnect or replace the cable. If the NIC is damaged, replace it."],
+  ["Troubleshooting", "A device can connect to a network device by IP address but not by host name. What is a probable cause?", ["Incorrect DNS settings", "A damaged network cable", "A failed NIC", "Low wireless signal"], "Other causes are an incorrect host name or a DNS server that is not operational."],
+  ["Troubleshooting", "A user cannot access the FTP server because a firewall is blocking it. Which ports must be allowed?", ["20 and 21", "80 and 443", "25 and 110", "67 and 68"], "Check both the router's firewall and the Windows firewall."],
+  ["Troubleshooting", "A device on one network cannot ping a device on another. Which command locates the broken link?", ["tracert", "ipconfig /all", "nslookup", "ipconfig /renew"], "tracert shows the path and where it stops."],
+  ["Troubleshooting", "ipconfig /renew reports that the operation failed because no adapter is in the state permissible. What is the cause?", ["The computer is configured with a static IP address", "The DNS server is down", "The SSID is hidden", "The router has no power"], "Reconfigure the NIC to obtain an IP address automatically."],
+  ["Troubleshooting", "Which commands does step 5 name for verifying a network fix?", ["ipconfig /all and ping", "format and chkdsk", "sfc and dism", "defrag and cleanmgr"], "Also verify the device can access authorized resources such as email servers and the internet."],
+  ],
+  cards: [
+  ["MAC address", "A unique 48-bit number that is part of the NIC. Written as 12 hexadecimal characters."],
+  ["OUI", "The first half of a MAC address, identifying the manufacturer."],
+  ["IPv4 address", "32 bits, written as four decimal numbers separated by dots. Has a network part and a host part."],
+  ["Subnet mask", "Determines which part of an IPv4 address is the network part."],
+  ["IPv6 address", "128 bits, written as eight groups of four hexadecimal characters separated by colons."],
+  ["IPv6 compression rules", "Omit leading 0s. Replace one run of all-0 segments with a double colon."],
+  ["ipconfig /all", "Shows full IP addressing, including the MAC (physical) address."],
+  ["Static addressing", "IP address, subnet mask, default gateway and DNS server entered manually."],
+  ["Dynamic addressing", "IP addressing information supplied by a DHCP server."],
+  ["Default gateway", "The address of the router, so information can be sent to other networks."],
+  ["DNS server setting", "The server that converts domain names or URLs to IP addresses."],
+  ["A and AAAA records", "A resolves a name to an IPv4 address. AAAA resolves a name to an IPv6 address."],
+  ["MX record", "Identifies the email servers for a domain. The lowest priority value is preferred."],
+  ["TXT record", "Textual information about a host, server or network. Used to identify legitimate email servers."],
+  ["DNS zone database", "Where a DNS server stores its resource records."],
+  ["Link-local IPv4 address", "169.254.x.x. Used when a device cannot obtain an IPv4 address."],
+  ["Link-local IPv6 address", "Begins with fe80. An IPv6 device must always have one."],
+  ["ICMP", "Internet Control Message Protocol. Tests connectivity and sends control and error messages."],
+  ["ping", "A command that is part of ICMP. Tests whether a device can be reached."],
+  ["ipconfig /release and /renew", "Give up the current DHCP address, then request a new one."],
+  ["tracert", "Shows the path to a destination, to locate a broken link."],
+  ["nslookup", "Queries a DNS server directly, to test name resolution."],
+  ["SSID", "The name of a wireless network."],
+  ["Basic wireless settings", "Network mode, SSID, channel, security mode, passphrase."],
+  ["Wireless mesh network", "Access points connected together to extend wireless coverage."],
+  ["NAT", "Converts private IPv4 addresses to internet-routable public IPv4 addresses."],
+  ["QoS", "Quality of Service. Prioritizes specific traffic types."],
+  ["UPnP", "Lets devices add themselves to a network without configuration. Not secure."],
+  ["DMZ", "A network that provides services to an untrusted network. Often contains servers."],
+  ["Port forwarding", "Allows traffic to specific ports."],
+  ["Port triggering", "A temporary opening in the firewall for an application or game."],
+  ["MAC address filtering", "Specifies the MAC addresses that are allowed on the wireless network."],
+  ["Whitelist and blacklist", "A whitelist allows access to specific addresses only. A blacklist blocks known web sites."],
+  ["IoT", "Internet of Things. Everyday devices connected to a network, as in a smart home."],
+  ["One device or all devices?", "One device: start with that device. All devices: start in the network room."],
+  ["Common network causes", "Loose cables, improperly installed NIC, ISP down, low wireless signal, invalid IP address, DNS or DHCP server issue."],
+  ]
+},
+ { n: 7, title: "Laptops and Other Mobile Devices" }, { n: 8, title: "Printers" },
+{ n: 9, title: "Virtualization and Cloud Computing" }, { n: 10, title: "Windows Installation" }, { n: 11, title: "Windows Configuration" },
+{ n: 12, title: "Mobile, Linux, and macOS Operating Systems" }, { n: 13, title: "Security" }, { n: 14, title: "The IT Professional" },
+];
+
+(function () {
+  "use strict";
+  var KEY = "ite8-study-v1", TARGET = 70;
+  var S = { q: {}, c: {} };
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && p.q && p.c) S = p; } } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  // give every question and card a stable id
+  CHAPTERS.forEach(function (ch) {
+    if (!ch.open) return;
+    ch.q = ch.q.map(function (a, i) { return { id: "c" + ch.n + "q" + i, ch: ch.n, topic: a[0], text: a[1], opts: a[2], why: a[3] }; });
+    ch.cards = ch.cards.map(function (a, i) { return { id: "c" + ch.n + "k" + i, term: a[0], def: a[1] }; });
+  });
+  var OPEN = CHAPTERS.filter(function (c) { return c.open; });
+  function chap(n) { return CHAPTERS.filter(function (c) { return c.n === n; })[0]; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (m) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]; }); }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function two(n) { return (n < 10 ? "0" : "") + n; }
+
+  function qRight(q) { return S.q[q.id] && S.q[q.id].last === 1; }
+  function qMissed(q) { return S.q[q.id] && S.q[q.id].last === 0; }
+  function stats(ch) {
+    var r = ch.q.filter(qRight).length, k = ch.cards.filter(function (c) { return S.c[c.id] === 1; }).length;
+    var total = ch.q.length + ch.cards.length;
+    return { right: r, known: k, done: r + k, total: total, pct: total ? (r + k) / total : 0, missed: ch.q.filter(qMissed).length };
+  }
+  function pins(pct, n, cls) {
+    var on = Math.round(pct * n), h = '<div class="pins ' + (cls || "") + '" role="img" aria-label="' + Math.round(pct * 100) + ' percent mastered">';
+    for (var i = 0; i < n; i++) h += '<i class="' + (i < on ? "on" : "") + '"></i>';
+    return h + "</div>";
+  }
+  function record(q, ok) { var r = S.q[q.id] || { r: 0, w: 0 }; if (ok) r.r++; else r.w++; r.last = ok ? 1 : 0; S.q[q.id] = r; save(); }
+
+  var V = { name: "home" }, timer = null, app = document.getElementById("app");
+  function go(v) { if (timer) { clearInterval(timer); timer = null; } V = v; render(); window.scrollTo(0, 0); var h = app.querySelector("h1,h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); } }
+
+  // ---------- views ----------
+  function home() {
+    var done = 0, total = 0, missed = 0;
+    OPEN.forEach(function (c) { var s = stats(c); done += s.done; total += s.total; missed += s.missed; });
+    var pct = total ? done / total : 0;
+    var h = '<div class="gap-l"><section class="board"><h1>IT Essentials 8 study bench</h1>' +
+      "<p>Flashcards and exam-style questions for each chapter, with the reason behind every answer. Your progress is saved on this device.</p>" +
+      '<div class="read"><span>Mastered so far</span><b>' + Math.round(pct * 100) + "%</b></div>" + pins(pct, 32, "big") + "</section>" +
+      '<div class="row"><button class="btn" data-a="examsetup">Set up a mixed exam</button>' +
+      (missed ? '<button class="btn ghost" data-a="missed" data-n="0">Review ' + missed + " missed question" + (missed === 1 ? "" : "s") + "</button>" : "") + "</div>" +
+      '<section><h2>Chapters</h2><ul class="slots">';
+    CHAPTERS.forEach(function (c) {
+      if (c.open) {
+        var s = stats(c);
+        h += '<li><button class="slot" data-a="chapter" data-n="' + c.n + '"><span class="num">' + two(c.n) + '</span><span class="t">' + esc(c.title) + "</span>" +
+          '<span class="meta">' + pins(s.pct, 20) + '<span class="small muted">' + s.done + " of " + s.total + "</span></span></button></li>";
+      } else {
+        h += '<li><div class="slot off"><span class="num">' + two(c.n) + '</span><span class="t">' + esc(c.title) + '</span><span class="small muted">Added after this chapter is taught</span></div></li>';
+      }
+    });
+    return h + "</ul></section></div>";
+  }
+
+  function chapter(n) {
+    var c = chap(n), s = stats(c), topics = {};
+    c.q.forEach(function (q) { var t = topics[q.topic] || (topics[q.topic] = { r: 0, n: 0 }); t.n++; if (qRight(q)) t.r++; });
+    var h = '<div class="stack"><button class="link" data-a="home">Back to all chapters</button>' +
+      '<p class="num" style="font-size:1.1rem;color:var(--accent)">Chapter ' + c.n + "</p><h1>" + esc(c.title) + '</h1><p class="muted">' + esc(c.blurb) + "</p>" +
+      '<div class="row" style="align-items:center">' + pins(s.pct, 24, "wide") + '<span class="small muted">' + s.done + " of " + s.total + " mastered</span></div>" +
+      '<div><button class="mode" data-a="cards" data-n="' + n + '"><b>Flashcards</b><span class="muted">' + c.cards.length + " terms. Flip each one, then mark whether you know it. " + s.known + " known so far.</span></button>" +
+      '<button class="mode" data-a="practice" data-n="' + n + '"><b>Practice questions</b><span class="muted">Ten at a time. You see the reason straight after each answer.</span></button>' +
+      '<button class="mode" data-a="test" data-n="' + n + '"><b>Chapter test</b><span class="muted">Twenty questions against the clock. Answers and reasons at the end.</span></button>' +
+      (s.missed ? '<button class="mode" data-a="missed" data-n="' + n + '"><b>Missed questions</b><span class="muted">' + s.missed + " you got wrong last time. Clear them here.</span></button>" : "") + "</div>" +
+      '<section><h2 style="margin-top:1.5rem">Questions answered correctly, by topic</h2><div style="margin-top:.8rem">';
+    Object.keys(topics).forEach(function (t) {
+      h += '<div class="topic"><span>' + esc(t) + '</span><span class="muted small">' + topics[t].r + " of " + topics[t].n + '</span><div class="bar"><span style="width:' + (100 * topics[t].r / topics[t].n) + '%"></span></div></div>';
+    });
+    return h + '</div></section><button class="link small" data-a="reset" data-n="' + n + '">Clear my progress for this chapter</button></div>';
+  }
+
+  function examSetup() {
+    var h = '<div class="stack"><button class="link" data-a="home">Back to all chapters</button><h1>Set up a mixed exam</h1>' +
+      '<p class="muted">Questions are drawn at random from the chapters you tick. You get one minute per question, and the answers and reasons appear at the end.</p><div>';
+    OPEN.forEach(function (c) { h += '<label class="pick"><input type="checkbox" name="ch" value="' + c.n + '" checked><span><b>Chapter ' + c.n + "</b><br>" + esc(c.title) + "</span></label>"; });
+    h += '</div><p><label for="count"><b>Number of questions</b></label><br><select id="count"><option>10</option><option selected>20</option><option>30</option><option>40</option></select></p>' +
+      '<p id="setuperr" class="verdict-no" role="alert"></p><button class="btn" data-a="examstart">Start the exam</button></div>';
+    return h;
+  }
+
+  function makeItems(qs) { return qs.map(function (q) { return { q: q, opts: shuffle(q.opts), pick: null }; }); }
+  function startSession(mode, qs, label, back, secs) {
+    if (!qs.length) { go(back); return; }
+    go({ name: "quiz", mode: mode, items: makeItems(qs), i: 0, label: label, back: back, secs: secs || 0, start: Date.now() });
+  }
+  function pickPractice(c, n) {
+    var unseen = shuffle(c.q.filter(function (q) { return !S.q[q.id]; })), wrong = shuffle(c.q.filter(qMissed)), right = shuffle(c.q.filter(qRight));
+    return shuffle(wrong.concat(unseen, right).slice(0, n));
+  }
+
+  function quiz() {
+    var it = V.items[V.i], n = V.items.length, instant = V.mode === "practice" || V.mode === "missed", answered = it.pick !== null;
+    var h = '<div class="top"><span class="muted">' + esc(V.label) + '</span><span>' + (V.secs ? '<span class="clock" id="clock" aria-live="off"></span>' : "") + "</span></div>" +
+      '<div class="prog" aria-hidden="true"><span style="width:' + (100 * (V.i + (answered ? 1 : 0)) / n) + '%"></span></div>' +
+      '<p class="muted small">Question ' + (V.i + 1) + " of " + n + ", " + esc(it.q.topic) + (OPEN.length > 1 && V.mode === "exam" ? ", chapter " + it.q.ch : "") + "</p>" +
+      "<h2>" + esc(it.q.text) + '</h2><ul class="opts">';
+    it.opts.forEach(function (o, k) {
+      var cls = "opt", dis = "";
+      if (instant && answered) { dis = " disabled"; if (o === it.q.opts[0]) cls += " right"; else if (o === it.pick) cls += " wrong"; }
+      else if (o === it.pick) cls += " sel";
+      h += '<li><button class="' + cls + '" data-a="pick" data-k="' + k + '"' + dis + ' aria-pressed="' + (o === it.pick) + '"><span class="k">' + "ABCD"[k] + "</span><span>" + esc(o) + "</span></button></li>";
+    });
+    h += "</ul>";
+    if (instant && answered) {
+      var ok = it.pick === it.q.opts[0];
+      h += '<div class="why" role="status"><b class="' + (ok ? "verdict-ok" : "verdict-no") + '">' + (ok ? "Correct." : "Not quite. The answer is: " + esc(it.q.opts[0])) + "</b>" + esc(it.q.why) + "</div>";
+    }
+    h += '<div class="row" style="margin-top:1.4rem">';
+    if (instant) h += '<button class="btn" data-a="next"' + (answered ? "" : " disabled") + ">" + (V.i === n - 1 ? "See my results" : "Next question") + "</button>";
+    else {
+      if (V.i > 0) h += '<button class="btn ghost" data-a="prev">Previous</button>';
+      h += V.i === n - 1 ? '<button class="btn gold" data-a="finish">Finish and mark</button>' : '<button class="btn" data-a="next">Next question</button>';
+    }
+    return h + '<button class="link" data-a="quit" style="margin-left:auto">Leave</button></div>';
+  }
+  function tick() {
+    var el = document.getElementById("clock"); if (!el) return;
+    var left = V.secs - Math.floor((Date.now() - V.start) / 1000);
+    if (left <= 0) { finish(); return; }
+    el.textContent = Math.floor(left / 60) + ":" + two(left % 60) + " left"; el.className = "clock" + (left <= 60 ? " low" : "");
+  }
+  function finish() {
+    var instant = V.mode === "practice" || V.mode === "missed";
+    if (!instant) V.items.forEach(function (it) { record(it.q, it.pick === it.q.opts[0]); });
+    go({ name: "results", items: V.items, label: V.label, back: V.back, mode: V.mode, took: Math.round((Date.now() - V.start) / 1000) });
+  }
+
+  function results() {
+    var n = V.items.length, right = V.items.filter(function (it) { return it.pick === it.q.opts[0]; }).length, pct = Math.round(100 * right / n);
+    var wrong = V.items.filter(function (it) { return it.pick !== it.q.opts[0]; }), topics = {};
+    V.items.forEach(function (it) { var t = topics[it.q.topic] || (topics[it.q.topic] = { r: 0, n: 0 }); t.n++; if (it.pick === it.q.opts[0]) t.r++; });
+    var graded = V.mode === "test" || V.mode === "exam";
+    var h = '<div class="stack"><p class="muted">' + esc(V.label) + '</p><h1 class="score">' + right + '<span style="font-size:.45em"> of ' + n + "</span></h1>" +
+      "<p><b>" + pct + "%.</b> " + (graded ? (pct >= TARGET ? "That is at or above the " + TARGET + "% target." : "That is below the " + TARGET + "% target. Read the reasons below, then try again.") : (wrong.length ? "Read the reasons for the ones you missed, then run them again." : "Every one correct.")) +
+      (graded ? ' <span class="muted">Time taken: ' + Math.floor(V.took / 60) + " min " + (V.took % 60) + " s.</span>" : "") + "</p>" +
+      '<div class="row">' + (wrong.length ? '<button class="btn" data-a="retry">Retry the ' + wrong.length + " I missed</button>" : "") + '<button class="btn ghost" data-a="back">Done</button></div>' +
+      '<section><h2 style="margin-top:1.2rem">By topic</h2><div style="margin-top:.6rem">';
+    Object.keys(topics).forEach(function (t) { h += '<div class="topic"><span>' + esc(t) + '</span><span class="muted small">' + topics[t].r + " of " + topics[t].n + '</span><div class="bar"><span style="width:' + (100 * topics[t].r / topics[t].n) + '%"></span></div></div>'; });
+    h += '</div></section><section><h2 style="margin-top:1.5rem">Every question, with the reason</h2>';
+    wrong.concat(V.items.filter(function (it) { return it.pick === it.q.opts[0]; })).forEach(function (it) {
+      var ok = it.pick === it.q.opts[0];
+      h += '<div class="rev"><span class="tag' + (ok ? "" : " no") + '">' + (ok ? "Correct" : it.pick === null ? "Not answered" : "Missed") + '</span><p class="q" style="margin-top:.4rem">' + esc(it.q.text) + "</p>" +
+        (!ok && it.pick !== null ? '<p class="a muted">You chose: ' + esc(it.pick) + "</p>" : "") + '<p class="a"><b>Answer:</b> ' + esc(it.q.opts[0]) + '</p><p class="a muted">' + esc(it.q.why) + "</p></div>";
+    });
+    return h + "</section></div>";
+  }
+
+  function startCards(n, onlyLearning) {
+    var c = chap(n), pool = c.cards.filter(function (k) { return S.c[k.id] !== 1; });
+    if (!onlyLearning && !pool.length) pool = c.cards;
+    if (!pool.length) { go({ name: "chapter", n: n }); return; }
+    go({ name: "cards", n: n, deck: shuffle(pool), i: 0, flip: false, got: 0 });
+  }
+  function cards() {
+    var c = chap(V.n);
+    if (V.i >= V.deck.length) {
+      var left = c.cards.filter(function (k) { return S.c[k.id] !== 1; }).length;
+      return '<div class="stack"><h1>Deck finished</h1><p>You marked ' + V.got + " of " + V.deck.length + " as known this round. " + (left ? left + " still to learn in this chapter." : "You know every term in this chapter.") + "</p>" +
+        '<div class="row">' + (left ? '<button class="btn" data-a="cardsagain">Go again with the ' + left + " still to learn</button>" : '<button class="btn" data-a="cardsall">Go through all of them again</button>') +
+        '<button class="btn ghost" data-a="chapter" data-n="' + V.n + '">Back to chapter ' + V.n + "</button></div></div>";
+    }
+    var k = V.deck[V.i];
+    return '<div class="top"><span class="muted">Chapter ' + V.n + " flashcards</span><span class=\"muted small\">Card " + (V.i + 1) + " of " + V.deck.length + "</span></div>" +
+      '<div class="prog" aria-hidden="true"><span style="width:' + (100 * V.i / V.deck.length) + '%"></span></div>' +
+      '<button class="card" data-a="flip" aria-live="polite"><span class="term">' + esc(k.term) + "</span>" + (V.flip ? '<span class="def">' + esc(k.def) + "</span>" : '<span class="hint muted small">Say what it means, then tap to check.</span>') + "</button>" +
+      '<div class="row" style="margin-top:1.2rem">' + (V.flip ? '<button class="btn ghost" data-a="learn">Still learning</button><button class="btn" data-a="know">I know this</button>' : '<button class="btn" data-a="flip">Show the meaning</button>') +
+      '<button class="link" data-a="chapter" data-n="' + V.n + '" style="margin-left:auto">Leave</button></div>';
+  }
+
+  function render() {
+    var v = V.name;
+    app.innerHTML = '<div class="wrap">' + (v === "home" ? home() : v === "chapter" ? chapter(V.n) : v === "examsetup" ? examSetup() : v === "quiz" ? quiz() : v === "results" ? results() : cards()) + "</div>";
+    if (v === "quiz" && V.secs) { tick(); if (!timer) timer = setInterval(tick, 1000); }
+  }
+
+  // ---------- actions ----------
+  function act(a, el) {
+    var n = el && el.getAttribute("data-n") ? +el.getAttribute("data-n") : 0, c, it;
+    if (a === "home") go({ name: "home" });
+    else if (a === "chapter") go({ name: "chapter", n: n });
+    else if (a === "examsetup") go({ name: "examsetup" });
+    else if (a === "cards") startCards(n, false);
+    else if (a === "cardsagain") startCards(V.n, true);
+    else if (a === "cardsall") { chap(V.n).cards.forEach(function (k) { delete S.c[k.id]; }); save(); startCards(V.n, false); }
+    else if (a === "flip") { V.flip = !V.flip; render(); var b = app.querySelector(".card"); if (b) b.focus(); }
+    else if (a === "know" || a === "learn") { S.c[V.deck[V.i].id] = a === "know" ? 1 : 0; if (a === "know") V.got++; save(); V.i++; V.flip = false; render(); var f = app.querySelector(".card,h1"); if (f) { f.setAttribute("tabindex", "-1"); f.focus(); } }
+    else if (a === "practice") { c = chap(n); startSession("practice", pickPractice(c, 10), "Chapter " + n + " practice", { name: "chapter", n: n }); }
+    else if (a === "test") { c = chap(n); var qs = shuffle(c.q).slice(0, 20); startSession("test", qs, "Chapter " + n + " test", { name: "chapter", n: n }, qs.length * 60); }
+    else if (a === "missed") { var pool = []; (n ? [chap(n)] : OPEN).forEach(function (x) { pool = pool.concat(x.q.filter(qMissed)); }); startSession("missed", shuffle(pool), "Missed questions", n ? { name: "chapter", n: n } : { name: "home" }); }
+    else if (a === "examstart") {
+      var picked = [].slice.call(document.querySelectorAll('input[name="ch"]:checked')).map(function (i) { return +i.value; });
+      if (!picked.length) { document.getElementById("setuperr").textContent = "Tick at least one chapter to draw questions from."; return; }
+      var all = []; picked.forEach(function (p) { all = all.concat(chap(p).q); });
+      var count = Math.min(+document.getElementById("count").value, all.length), set = shuffle(all).slice(0, count);
+      startSession("exam", set, "Mixed exam, " + count + " questions", { name: "home" }, count * 60);
+    }
+    else if (a === "pick") {
+      it = V.items[V.i]; var instant = V.mode === "practice" || V.mode === "missed";
+      if (instant && it.pick !== null) return;
+      it.pick = it.opts[+el.getAttribute("data-k")];
+      if (instant) record(it.q, it.pick === it.q.opts[0]);
+      render(); var nx = app.querySelector(instant ? '[data-a="next"]' : ".opt.sel"); if (nx) nx.focus();
+    }
+    else if (a === "next") { if (V.i < V.items.length - 1) { V.i++; render(); window.scrollTo(0, 0); var h2 = app.querySelector("h2"); if (h2) { h2.setAttribute("tabindex", "-1"); h2.focus({ preventScroll: true }); } } else finish(); }
+    else if (a === "prev") { V.i--; render(); }
+    else if (a === "finish") { var blank = V.items.filter(function (x) { return x.pick === null; }).length; if (blank && !el.getAttribute("data-sure")) { el.setAttribute("data-sure", "1"); el.textContent = blank + " not answered. Finish anyway"; return; } finish(); }
+    else if (a === "quit") go(V.back);
+    else if (a === "back") go(V.back);
+    else if (a === "retry") { var w = V.items.filter(function (x) { return x.pick !== x.q.opts[0]; }).map(function (x) { return x.q; }); startSession("missed", shuffle(w), "Missed questions", V.back); }
+    else if (a === "reset") { if (!el.getAttribute("data-sure")) { el.setAttribute("data-sure", "1"); el.textContent = "Tap again to clear this chapter's progress"; return; } c = chap(n); c.q.forEach(function (q) { delete S.q[q.id]; }); c.cards.forEach(function (k) { delete S.c[k.id]; }); save(); render(); }
+  }
+  document.addEventListener("click", function (e) { var el = e.target.closest ? e.target.closest("[data-a]") : null; if (el && !el.disabled) act(el.getAttribute("data-a"), el); });
+  document.addEventListener("keydown", function (e) {
+    if (V.name !== "quiz" || e.ctrlKey || e.metaKey || e.altKey) return;
+    var k = "abcd".indexOf(e.key.toLowerCase()); if (k < 0) k = "1234".indexOf(e.key);
+    if (k >= 0 && k < V.items[V.i].opts.length) { var b = app.querySelectorAll(".opt")[k]; if (b && !b.disabled) act("pick", b); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
